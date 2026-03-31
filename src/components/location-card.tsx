@@ -1,26 +1,23 @@
 type Props = {
     name: string;
     listings: string;
-    img: string;
+    image: string;
 };
 
-const LocationCard = ({ name, listings, img }: Props) => {
+export default function LocationCard({ name, listings, image }: Props) {
     return (
-        <div className="popular-locations-alternate">
-
-            <div className="overlay-box">
-                <div className="mt-auto">
-                    <h3>
-                        <span>{name}</span>
-                        <span>{listings}</span>
-                    </h3>
+        <div className="col-md-6 col-lg-3 col-xl-4">
+            <div className="popular-locations-alternate">
+                <div className="overlay-box">
+                    <div className="mt-auto">
+                        <h3>
+                            <a href="#">{name}</a>
+                            <span>{listings}</span>
+                        </h3>
+                    </div>
                 </div>
+                <img src={image} alt={name} />
             </div>
-
-            <img src={img} alt={name} />
-
         </div>
     );
-};
-
-export default LocationCard;
+}

@@ -7,17 +7,21 @@ import {
     IconDots
 } from "@tabler/icons-react";
 
+import { useState } from "react";
+
 type HeroProps = {
     onSearch?: (category: string, location: string) => void;
 };
 
 const Hero = ({ onSearch }: HeroProps) => {
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const [category, setCategory] = useState("");
+    const [location, setLocation] = useState("");
 
-        const formData = new FormData(e.currentTarget);
-        const category = formData.get("category") as string;
-        const location = formData.get("location") as string;
+    const handleSearch = () => {
+        if (!category || !location) {
+            alert("Please select category and location");
+            return;
+        }
 
         onSearch?.(category, location);
     };
@@ -47,17 +51,15 @@ const Hero = ({ onSearch }: HeroProps) => {
                                 with genuine reviews, transparent pricing, and real availability.
                             </p>
 
-                            {/* FORM */}
-                            <form
-                                className="form-bg row align-items-center"
-                                onSubmit={handleSubmit}
-                            >
+                            {/* FORM STYLE DIV (same as your HTML) */}
+                            <div className="form-bg row no-gutters align-items-center">
 
                                 {/* CATEGORY */}
-                                <div className="col-12 col-md-5 select-1">
+                                <div className="col-12 col-md-5">
                                     <select
-                                        name="category"
                                         className="form-light-select theme-combo home-select-1 py-2"
+                                        value={category}
+                                        onChange={(e) => setCategory(e.target.value)}
                                     >
                                         <option value="">Select Vendor Category</option>
                                         <option value="Wedding Venues">Wedding Venues</option>
@@ -69,11 +71,12 @@ const Hero = ({ onSearch }: HeroProps) => {
                                 </div>
 
                                 {/* LOCATION */}
-                                <div className="col-12 col-md-5 select-2">
+                                <div className="col-12 col-md-5">
                                     <div className="px-2 w-100">
                                         <select
-                                            name="location"
                                             className="form-light-select theme-combo home-select-2 py-2"
+                                            value={location}
+                                            onChange={(e) => setLocation(e.target.value)}
                                         >
                                             <option value="">Select Location</option>
                                             <option value="Hyderabad">Hyderabad</option>
@@ -85,17 +88,18 @@ const Hero = ({ onSearch }: HeroProps) => {
                                     </div>
                                 </div>
 
-                                {/* BUTTON */}
+                                {/* BUTTON (same like anchor) */}
                                 <div className="col-12 col-md-2">
                                     <button
-                                        type="submit"
-                                        className="btn btn-default text-nowrap w-100"
+                                        type="button"
+                                        onClick={handleSearch}
+                                        className="btn btn-default text-nowrap btn-block w-100"
                                     >
                                         Search Now
                                     </button>
                                 </div>
 
-                            </form>
+                            </div>
 
                             <p className="lead txt-white text-center">
                                 Or browse featured categories
@@ -105,7 +109,7 @@ const Hero = ({ onSearch }: HeroProps) => {
                             <div className="slider-category d-flex justify-content-center gap-4">
 
                                 {categories.map((item, index) => (
-                                    <a key={index} href="#">
+                                    <a key={index} href="#" title={item.label}>
                                         {item.icon}
                                     </a>
                                 ))}
