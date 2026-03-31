@@ -88,7 +88,6 @@ const Hero = ({ onSearch }: HeroProps) => {
                                     </div>
                                 </div>
 
-                                {/* BUTTON (same like anchor) */}
                                 <div className="col-12 col-md-2">
                                     <button
                                         type="button"
