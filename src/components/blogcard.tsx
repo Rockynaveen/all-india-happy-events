@@ -1,34 +1,31 @@
+type Blog = {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  updated: string;
+};
+
 type Props = {
-    title: string;
-    description: string;
-    date: string;
-    img: string;
+  blog: Blog;
 };
 
-const BlogCard = ({ title, description, date, img }: Props) => {
-    return (
-        <div className="rr-project-slider-item">
+export default function BlogCard({ blog }: Props) {
+  return (
+    <div className="rr-project-slider-item">
 
-            <div className="rr-project-slider-thumb">
-                <img src={img} alt={title} />
-            </div>
+      {/* Image */}
+      <div className="rr-project-slider-thumb">
+        <img src={blog.image} alt={blog.title} />
+      </div>
 
-            <div className="rr-project-slider-content text-center">
-                <h3 className="rr-project-slider-title">
-                    <a href="#" className="bloghead">
-                        {title}
-                    </a>
-                </h3>
+      {/* Overlay Content */}
+      <div className="rr-project-slider-content text-center">
+        <h3 className="rr-project-slider-title">{blog.title}</h3>
+        <p>{blog.description}</p>
+        <span>Updated: {blog.updated}</span>
+      </div>
 
-                <p>{description}</p>
-
-                <a href="#" className="more-link">
-                    {date}
-                </a>
-            </div>
-
-        </div>
-    );
-};
-
-export default BlogCard;
+    </div>
+  );
+}
