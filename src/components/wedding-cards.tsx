@@ -1,10 +1,6 @@
-type Props = {
-    title: string;
-    location: string;
-    date: string;
-    mainImg: string;
-    gallery: string[];
-};
+import type { Wedding } from "../types/wedding-type";
+
+type Props = Wedding;
 
 const WeddingCard = ({ title, location, date, mainImg, gallery }: Props) => {
     return (
@@ -18,8 +14,7 @@ const WeddingCard = ({ title, location, date, mainImg, gallery }: Props) => {
                         <a href="#">{title}</a>
                     </h3>
                     <p>
-                        <i className="fa fa-map-marker"></i>{" "}
-                        {location}
+                        <i className="fa fa-map-marker"></i> {location}
                     </p>
                 </div>
 
@@ -50,7 +45,6 @@ const WeddingCard = ({ title, location, date, mainImg, gallery }: Props) => {
                                 Load <br /> More
                             </div>
 
-                            {/* safe fallback */}
                             <img src={gallery[2] || gallery[0]} alt="more" />
                         </a>
                     </li>

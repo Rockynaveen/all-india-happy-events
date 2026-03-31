@@ -1,12 +1,7 @@
-
+import type { Category } from "../types/category-type";
 
 type Props = {
-  category: {
-    title: string;
-    vendors: number;
-    image: string;
-    icon: string;
-  };
+  category: Category;
 };
 
 export default function CategoryCard({ category }: Props) {

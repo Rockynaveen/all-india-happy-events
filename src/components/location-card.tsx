@@ -1,8 +1,6 @@
-type Props = {
-    name: string;
-    listings: string;
-    image: string;
-};
+import type { Location } from "../types/location-type";
+
+type Props = Location;
 
 export default function LocationCard({ name, listings, image }: Props) {
     return (
