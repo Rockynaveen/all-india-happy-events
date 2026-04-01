@@ -1,0 +1,55 @@
+import type { ImageItem } from "../../types/pre-event-photographer/pre-event-images-type";
+
+export const imageData: ImageItem[] = [
+    {
+        id: 1,
+        name: "Poetric Pics Photography",
+        image: "assets/images/photography/photography_3.jpg",
+        location: "Gandhi Nagar, Tirupati, India",
+        price: "50,000",
+        reviews: 22,
+        featured: true,
+    },
+    {
+        id: 2,
+        name: "Video Crafts",
+        image: "assets/images/photography/photography_4.jpg",
+        location: "Eluru Road, Vijayawada, India",
+        price: "75,000",
+        reviews: 12,
+        featured: true,
+    },
+    {
+        id: 3,
+        name: "7 Frames Photography",
+        image: "assets/images/photography/photography_1.jpg",
+        location: "Araku Valley Road, Vizag, India",
+        price: "1,00,000",
+        reviews: 30,
+    },
+    {
+        id: 4,
+        name: "Frozen Memories",
+        image: "assets/images/photography/photography_2.jpg",
+        location: "Hitech, Hyderabad, India",
+        price: "1,50,000",
+        reviews: 10,
+        featured: true,
+    },
+    {
+        id: 5,
+        name: "Prasad Studio",
+        image: "assets/images/photography/photography_5.jpg",
+        location: "Warangal, India",
+        price: "20,000",
+        reviews: 40,
+    },
+    {
+        id: 6,
+        name: "Pragathi Filims",
+        image: "assets/images/photography/photography_6.jpg",
+        location: "Rajahmundry, India",
+        price: "75,000",
+        reviews: 15,
+    },
+];
