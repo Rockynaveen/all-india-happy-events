@@ -2,10 +2,10 @@ import SearchResultHeader from "../components/pre-event-photographer/search-head
 import Header from "../components/header";
 import Footer from "../components/footer";
 import PhotographerList from "../components/pre-event-photographer/photographer-list";
-import ImageGrid from "../components/pre-event-photographer/pre-event-images";
+// import ImageGrid from "../components/pre-event-photographer/pre-event-images";
 import PopularServices from "../components/pre-event-photographer/popular-services";
 import PlannerSection from "../components/pre-event-photographer/contact-section";
-import FAQTabs from "../components/pre-event-photographer/faq-section";
+// import FAQTabs from "../components/pre-event-photographer/faq-section";
 
 
 const PreEventPhotographers = (): JSX.Element => {
@@ -14,8 +14,8 @@ const PreEventPhotographers = (): JSX.Element => {
             <Header />
             <SearchResultHeader />
             <PhotographerList />
-            <ImageGrid />
-            <FAQTabs/>
+            {/* <ImageGrid /> */}
+            {/* <FAQTabs/> */}
             <PopularServices />
             <PlannerSection />
 
