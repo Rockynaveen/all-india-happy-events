@@ -4,7 +4,7 @@ export type FAQItem = {
   answer: string;
 };
 
-export type FAQCategory = {
+export type TabType = {
   id: string;
   title: string;
   faqs: FAQItem[];
