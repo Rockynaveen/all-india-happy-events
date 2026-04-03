@@ -12,11 +12,22 @@ import VendorForm from "../components/pre-event-details-page.tsx/form-section";
 import Availability from "../components/pre-event-details-page.tsx/date-picker";
 import Categories from "../components/pre-event-details-page.tsx/categoriesss";
 import Statistics from "../components/pre-event-details-page.tsx/statistics";
-
+import WorkingHours from "../data/pre-event-photographer/pre-event-details/working-hours";
+import AuthorProfile from "../components/pre-event-details-page.tsx/author";
+import { authorProfileData } from "../data/pre-event-photographer/pre-event-details/author-data";
+import FeaturedListing from "../components/pre-event-details-page.tsx/featured-list";
+import { featuredListingsData } from "../data/pre-event-photographer/pre-event-details/featured-data";
+import { reviewsData } from "../data/pre-event-photographer/pre-event-details/review-list-data";
+import VendorNav from "../components/pre-event-details-page.tsx/nav-section";
+import VendorProfileHeader from "../components/pre-event-details-page.tsx/profile-header";
+import VendorSlider from "../components/pre-event-details-page.tsx/vendor-slider";
 const VendorsDetailsPage = () => {
     return (
         <div>
             <Header />
+            <VendorSlider />
+            <VendorProfileHeader />
+            <VendorNav />
 
             <section className="vendor-details py-5">
                 <div className="container">
@@ -28,7 +39,7 @@ const VendorsDetailsPage = () => {
                             <AmenitiesSection />
                             <GallerySection />
                             <VideoSection />
-                            <ReviewsSection />
+                            <ReviewsSection data={reviewsData} />
                             <ReviewSection />
                             <LocationSection />
                         </div>
@@ -39,6 +50,9 @@ const VendorsDetailsPage = () => {
                             <Availability />
                             <Categories />
                             <Statistics />
+                            <WorkingHours />
+                            <AuthorProfile data={authorProfileData} />
+                            <FeaturedListing data={featuredListingsData} />
                         </div>
 
                     </div>

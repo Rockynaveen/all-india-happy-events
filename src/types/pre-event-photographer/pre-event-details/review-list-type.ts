@@ -1,21 +1,14 @@
-export type ReviewCategory = {
-    label: string;
-    icon: string;
-    rating: number;
-    percentage: number;
-};
-
-export type ReviewItem = {
-    id: string;
+export type Review = {
+    id: number;
     name: string;
     image: string;
     rating: number;
-    date: string;
     title: string;
-    comment: string;
-    categories: ReviewCategory[];
+    description: string;
+    date: string;
     reply?: {
-        message: string;
+        image: string;
         date: string;
+        message: string;
     };
 };

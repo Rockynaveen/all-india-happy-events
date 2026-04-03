@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { Vendor } from "../../types/pre-event-photographer/image-type";
 
 type Props = {
@@ -6,13 +7,15 @@ type Props = {
 
 const VendorCard = ({ vendor }: Props) => {
     return (
-        <div className="col-lg-6 col-md-6 mb-4"> {/* ✅ THIS FIXES LAYOUT */}
+        <div className="col-lg-6 col-md-6 mb-4">
             <div className="wedding-listing">
 
                 <div className="img">
-                    <a href="#">
+
+                    {/* ✅ CLICK IMAGE → GO TO DETAILS */}
+                    <Link to={`/vendors/${vendor.id}`}>
                         <img src={vendor.image} alt={vendor.title} />
-                    </a>
+                    </Link>
 
                     <div className="img-content">
                         <div className="top">
@@ -31,28 +34,33 @@ const VendorCard = ({ vendor }: Props) => {
                         </div>
 
                         <div className="bottom">
-                            <a className="tags" href="#">
-                                {vendor.tags}
-                            </a>
 
-                            <a className="favorite" href="#">
+                            {/* ✅ TAG CLICK */}
+                            <Link className="tags" to={`/vendors/${vendor.id}`}>
+                                {vendor.tags}
+                            </Link>
+
+                            <button className="favorite">
                                 <i className="fa fa-heart-o"></i>
-                            </a>
+                            </button>
+
                         </div>
                     </div>
                 </div>
 
                 <div className="content">
                     <div className="gap">
+
+                        {/* ✅ TITLE CLICK */}
                         <h3>
-                            <a href="#">
+                            <Link to={`/vendors/${vendor.id}`}>
                                 {vendor.title}
                                 {vendor.verified && (
                                     <span className="verified">
                                         <i className="fa fa-check-circle"></i>
                                     </span>
                                 )}
-                            </a>
+                            </Link>
                         </h3>
 
                         <div>
