@@ -7,6 +7,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Homepage from "./pages/home-page";
 import PreEventPhotographers from "./pages/pre-event-photographers";
 import VendorDetailsPage from "./pages/vendors-details-page";
+import BlogsPage from "./pages/blogs-page";
+import BlogDetailsPage from "./pages/blog-details-page";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -21,6 +23,11 @@ createRoot(document.getElementById("root")!).render(
 
         {/* Details Page */}
         <Route path="/vendors/:id" element={<VendorDetailsPage />} />
+
+        {/* ✅ FIXED: Blogs route inside Routes */}
+        <Route path="/blogs" element={<BlogsPage />} />
+        <Route path="/blogs/:id" element={<BlogDetailsPage />} />
+
       </Routes>
     </BrowserRouter>
   </StrictMode>
