@@ -3,10 +3,12 @@ import Footer from "../components/footer";
 import BlogDetailsSection from "../components/blogs/blog-details/image-card";
 import Sidebar from "../components/blogs/side-bar";
 import BlogDetailsContent from "../components/blogs/blog-details/blog-details-content";
+import Header from "../components/header";
 
 const BlogDetailsPage = () => {
     return (
         <div>
+            <Header/>
             <Breadcrumbs title="Blog Details" />
 
             <div className="container">

@@ -17,7 +17,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
                         )}
 
                         {/* ✅ Wrap image with Link */}
-                        <Link to={`/blog/${blog.id}`}>
+                        <Link to={`/blogs/${blog.id}`}>
                             <div className="img-hover">
                                 <i className="fa fa-plus"></i>
                             </div>
@@ -33,7 +33,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
 
                     {/* ✅ Title Link */}
                     <h3 className="blog-title">
-                        <Link to={`/blog/${blog.id}`} className="post-title">
+                        <Link to={`/blogs/${blog.id}`} className="post-title">
                             {blog.title}
                         </Link>
                     </h3>
@@ -52,7 +52,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
                     {/* ✅ Read More Link */}
                     <div className="read-more mt-2">
                         <Link
-                            to={`/blog/${blog.id}`}
+                            to={`/blogs/${blog.id}`}
                             className="btn btn-link btn-link-primary"
                         >
                             Read More

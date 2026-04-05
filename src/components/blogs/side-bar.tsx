@@ -13,7 +13,7 @@ const Sidebar = () => {
       <div className="sidebar-primary col-lg-12 col-md-6">
 
         {/* SEARCH */}
-        <form className="sidebar-search mb-4">
+        <form className="sidebar-search mb-4 mt-4">
           <input
             type="text"
             className="form-control"
