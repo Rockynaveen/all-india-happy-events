@@ -1,9 +1,7 @@
+import React, { useState } from "react";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import LocationSection from "../components/pre-event-details-page/location-section";
-
-import ReviewSection from "../components/pre-event-details-page/review-section";
-import ReviewsSection from "../components/pre-event-details-page/review-item-section";
 import VideoSection from "../components/pre-event-details-page/video-card";
 import GallerySection from "../components/pre-event-details-page/gallery-section";
 import AmenitiesSection from "../components/pre-event-details-page/amenitie-section";
@@ -17,16 +15,38 @@ import AuthorProfile from "../components/pre-event-details-page/author";
 import { authorProfileData } from "../data/pre-event-photographer/pre-event-details/author-data";
 import FeaturedListing from "../components/pre-event-details-page/featured-list";
 import { featuredListingsData } from "../data/pre-event-photographer/pre-event-details/featured-data";
-import { reviewsData } from "../data/pre-event-photographer/pre-event-details/review-list-data";
 import VendorNav from "../components/pre-event-details-page/nav-section";
-import VendorProfileHeader from "../components/pre-event-details-page/profile-header";
-import VendorSlider from "../components/pre-event-details-page/vendor-slider";
+import ReviewHeader from "../components/pre-event-details-page/review-header";
+import ReviewSummary from "../components/pre-event-details-page/review-summary";
+import ReviewSortBar from "../components/pre-event-details-page/review-sortbar";
+import ReviewsSection from "../components/pre-event-details-page/reviews-section";
+import ReviewForm from "../components/pre-event-details-page/review-form";
+import FaqSection from "../components/pre-event-details-page/faq-section";
+
+import VendorProfile from "../components/pre-event-details-page/vendor-profile";
+import VendorContent from "../components/pre-event-details-page/vendor-content";
+
 const VendorsDetailsPage = () => {
+
+    // ✅ CONTROL TAB STATE
+    const [activeTab, setActiveTab] = useState("slider");
+
     return (
         <div>
             <Header />
-            <VendorSlider />
-            <VendorProfileHeader />
+
+            <div className="vendor-profile-single">
+
+                                    <VendorContent activeTab={activeTab} />
+
+                    <VendorProfile 
+                        activeTab={activeTab} 
+                        setActiveTab={setActiveTab} 
+                    />
+
+
+            </div>
+
             <VendorNav />
 
             <section className="vendor-details py-5">
@@ -39,8 +59,12 @@ const VendorsDetailsPage = () => {
                             <AmenitiesSection />
                             <GallerySection />
                             <VideoSection />
-                            <ReviewsSection data={reviewsData} />
-                            <ReviewSection />
+                            <ReviewHeader />
+                            <ReviewSummary />
+                            <ReviewSortBar />
+                            <ReviewsSection />
+                            <ReviewForm />
+                            <FaqSection />
                             <LocationSection />
                         </div>
 

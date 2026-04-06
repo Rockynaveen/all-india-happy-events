@@ -1,20 +1,29 @@
-import RatingStars from "./rating-stars";
+import React from "react";
 
-type Props = {
-  label: string;
-  icon: string;
-};
+const ReviewOption = (props: any) => {
+  const { icon, rating, title, percentage } = props;
 
-const ReviewOption = ({ label, icon }: Props) => {
   return (
-    <div className="review-option">
-      <div className="icon">
-        <i className={icon}></i>
-      </div>
+    <div className="col-md-4">
+      <div className="review-option">
+        <div className="icon">
+          <i className={`fa ${icon}`}></i>
+          <span className="review-each-count">{rating}</span>
+        </div>
 
-      <div className="count">
-        <strong>{label}</strong>
-        <RatingStars />
+        <div className="count">
+          <strong>{title}</strong>
+          <div>
+            <div className="bar-base">
+              <div
+                className="bar-filled"
+                style={{ width: `${percentage}%` }}
+              >
+                &nbsp;
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

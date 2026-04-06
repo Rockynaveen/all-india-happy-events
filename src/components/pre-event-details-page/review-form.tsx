@@ -1,9 +1,11 @@
-import ReviewOption from "./review-option";
-import { reviewCategories } from "../../data/pre-event-photographer/pre-event-details/review-data";
+import React from "react";
+import RatingOption from "./rating-option";
+import ratingData from "../../data/pre-event-photographer/pre-event-details/review-rating-data";
 
-const ReviewSection = () => {
+const ReviewForm: React.FC = () => {
   return (
     <div className="card-shadow pos-rel">
+      
       <a id="review-form" className="anchor-fake" tabIndex={-1}></a>
 
       <div className="card-shadow-header">
@@ -13,17 +15,17 @@ const ReviewSection = () => {
       </div>
 
       <div className="card-shadow-body">
-        {/* Rating Options */}
+
+        {/* Ratings */}
         <div className="row rating-stars-wrap">
-          {reviewCategories.map((item) => (
-            <div key={item.id} className="col-md-4 col-6 mb-3 mb-md-0">
-              <ReviewOption label={item.label} icon={item.icon} />
-            </div>
+          {ratingData.map((item, index) => (
+            <RatingOption key={index} {...item} />
           ))}
         </div>
 
         {/* Form */}
         <div className="row mt-4">
+          
           <div className="col-md-12 mb-0">
             <div className="form-group">
               <textarea
@@ -55,6 +57,7 @@ const ReviewSection = () => {
               />
             </div>
           </div>
+
         </div>
 
         <div className="mt-3">
@@ -62,9 +65,10 @@ const ReviewSection = () => {
             Post Your Comment
           </button>
         </div>
+
       </div>
     </div>
   );
 };
 
-export default ReviewSection;
+export default ReviewForm;
