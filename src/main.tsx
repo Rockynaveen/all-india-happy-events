@@ -9,6 +9,7 @@ import PreEventPhotographers from "./pages/pre-event-photographers";
 import VendorDetailsPage from "./pages/vendors-details-page";
 import BlogsPage from "./pages/blogs-page";
 import BlogDetailsPage from "./pages/blog-details-page";
+import Register from "./pages/Register";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -28,6 +29,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/blogs" element={<BlogsPage />} />
         <Route path="/blogs/:id" element={<BlogDetailsPage />} />
 
+<Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

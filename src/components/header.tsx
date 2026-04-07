@@ -96,7 +96,7 @@ const Header = () => {
           <ul className="navbar-nav nav-center">
             {navLinks.map((item, index) => (
               <li key={index} className="nav-item dropdown mega-parent">
-                
+
                 <a className="nav-link" href={item.link}>
                   {item.name}
                   {item.megaMenu && <i className="fa fa-chevron-down"></i>}
@@ -139,19 +139,29 @@ const Header = () => {
           </button>
 
           <div className="rr-header-right d-flex align-items-center">
+
+            {/* CART */}
             <div className="rr-header-icon-card d-none d-xl-block">
               <IconShoppingBag className="text-light" />
               <span>0</span>
             </div>
 
+            {/* LOGIN BUTTON */}
             <div className="rr-header-contat d-none d-md-block ml-35">
-              <Link className="rr-btn" to="/login">
+              <Link className="rr-btn me-2" to="/login">
                 <span>Login <IconArrowRight /></span>
               </Link>
             </div>
+
+            {/* REGISTER BUTTON */}
+            <div className="rr-header-contat d-none d-md-block">
+              <Link className="rr-btn register-btn" to="/register">
+                <span>Register <IconArrowRight /></span>
+              </Link>
+            </div>
+
           </div>
         </div>
-
       </nav>
     </header>
   );

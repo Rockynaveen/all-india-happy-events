@@ -1,0 +1,63 @@
+/* Layout */
+.register-wrapper {
+  display: flex;
+  height: 100vh;
+}
+
+/* LEFT SIDE */
+.register-left {
+  flex: 1;
+  background: url("https://images.unsplash.com/photo-1519741497674-611481863552")
+    no-repeat center center/cover;
+  position: relative;
+}
+
+.register-left .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* RIGHT SIDE */
+.register-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8fafc;
+}
+
+/* FORM BOX */
+.register-box {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* INPUTS */
+.register-box input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+/* BUTTON */
+.register-box button {
+  padding: 10px;
+  background: #2563eb;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ERROR */
+.error {
+  color: red;
+}
