@@ -1,28 +1,39 @@
 import { useState, useEffect } from "react";
-import {
-  registerUser,
-  verifyOtp,
-  resendOtp
-} from "../api/auth-api";
-import OtpInput from "../components/otp-input";
+import { useMutation } from "@tanstack/react-query";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import "../assets/css/register.css"
+
+import { registerUser, verifyOtp, resendOtp } from "../api/auth-api";
+import OtpInput from "../components/otp-input";
+import "../assets/css/register.css";
+
+const registerSchema = z.object({
+  name: z.string().min(1, "Full Name is required"),
+  email: z.string().email("Invalid email"),
+  phone_number: z.string().length(10, "Phone number must be 10 digits"),
+});
+
+type RegisterFormInputs = z.infer<typeof registerSchema>;
+
 const Register = () => {
   const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone_number: ""
-  });
-
-  const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [step, setStep] = useState<"FORM" | "OTP">("FORM");
+  const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [timer, setTimer] = useState(30);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // ⏱ OTP Timer
+  // React Hook Form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormInputs>({
+    resolver: zodResolver(registerSchema),
+  });
+
+  // OTP Timer
   useEffect(() => {
     if (step === "OTP" && timer > 0) {
       const interval = setInterval(() => setTimer((t) => t - 1), 1000);
@@ -30,148 +41,109 @@ const Register = () => {
     }
   }, [step, timer]);
 
-  // 🧾 Handle Input
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setError("");
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  // 📲 REGISTER
-  const handleRegister = async () => {
-    if (!form.name || !form.email || !form.phone_number) {
-      setError("All fields are required");
-      return;
-    }
-
-    if (form.phone_number.length !== 10) {
-      setError("Enter valid 10-digit phone number");
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError("");
-
-      const res = await registerUser(form);
-      console.log("REGISTER RESPONSE 👉", res.data);
-
+  // 🔹 React Query: Register Mutation
+  const registerMutation = useMutation({
+    mutationFn: (data: RegisterFormInputs) => registerUser(data),
+    onSuccess: () => {
       setStep("OTP");
       setTimer(30);
-
-    } catch (err: any) {
-      console.error(err);
-      setError(err.response?.data?.message || "Registration failed");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // 🔐 VERIFY OTP
-  const handleVerify = async () => {
-    if (otp.join("").length !== 6) {
-      setError("Enter valid 6-digit OTP");
-      return;
-    }
-
-    try {
-      setLoading(true);
       setError("");
+    },
+    onError: (err: any) => {
+      setError(err.response?.data?.message || "Registration failed");
+    },
+  });
 
-      const res = await verifyOtp({
-        phone_number: form.phone_number,
-        otp: otp.join("")
-      });
-
-      console.log("VERIFY RESPONSE 👉", res.data);
-
-      // ✅ SAFE TOKEN EXTRACTION
-      const token =
-        res.data?.token ||
-        res.data?.access_token ||
-        res.data?.data?.token;
-
+  // 🔹 React Query: OTP Verification
+  const verifyMutation = useMutation({
+    mutationFn: (data: { phone_number: string; otp: string }) => verifyOtp(data),
+    onSuccess: (res: any) => {
+      const token = res.data?.token || res.data?.access_token || res.data?.data?.token;
       if (!token) {
         setError("Login failed: token not received");
         return;
       }
-
       localStorage.setItem("token", token);
-
-      // ✅ Redirect
       navigate("/", { replace: true });
-
-    } catch (err: any) {
-      console.error(err);
+    },
+    onError: (err: any) => {
       setError(err.response?.data?.message || "Invalid OTP");
-    } finally {
-      setLoading(false);
-    }
+    },
+  });
+
+  const onSubmit = (data: RegisterFormInputs) => {
+    registerMutation.mutate(data);
   };
 
-  // 🔁 RESEND OTP
+  const handleVerify = () => {
+    if (otp.join("").length !== 6) {
+      setError("Enter valid 6-digit OTP");
+      return;
+    }
+    verifyMutation.mutate({ phone_number: watchPhone(), otp: otp.join("") });
+  };
+
+  // Watch phone number from form
+  const watchPhone = () => {
+    return (document.querySelector<HTMLInputElement>('input[name="phone_number"]')?.value || "").trim();
+  };
+
   const handleResend = async () => {
     try {
-      await resendOtp(form.phone_number);
+      await resendOtp(watchPhone());
       setTimer(30);
-    } catch (err) {
+    } catch {
       setError("Failed to resend OTP");
     }
   };
 
   return (
-  <div className="register-wrapper">
-    
-    {/* LEFT SIDE */}
-    <div className="register-left">
-      <div className="overlay">
-        <h1>Welcome to All Happy Events</h1>
-        <p>Plan your perfect event with the best vendors</p>
-      </div>
-    </div>
-
-    {/* RIGHT SIDE */}
-    <div className="register-right">
-      <div className="register-box">
-        <h2>Create Account</h2>
+    <div className="register-page d-flex justify-content-center align-items-center vh-100">
+      <div className="register-box p-4">
+        <h2 className="mb-3 text-center">Register</h2>
 
         {error && <p className="error">{error}</p>}
 
         {step === "FORM" && (
-          <>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <input
-              name="name"
+              type="text"
               placeholder="Full Name"
-              onChange={handleChange}
+              {...register("name")}
+              className={errors.name ? "is-invalid" : ""}
             />
+            {errors.name && <p className="invalid-feedback">{errors.name.message}</p>}
 
             <input
-              name="email"
+              type="email"
               placeholder="Email Address"
-              onChange={handleChange}
+              {...register("email")}
+              className={errors.email ? "is-invalid" : ""}
             />
+            {errors.email && <p className="invalid-feedback">{errors.email.message}</p>}
 
             <input
-              name="phone_number"
+              type="text"
               placeholder="Phone Number"
-              onChange={handleChange}
+              {...register("phone_number")}
+              className={errors.phone_number ? "is-invalid" : ""}
             />
+            {errors.phone_number && <p className="invalid-feedback">{errors.phone_number.message}</p>}
 
-            <button onClick={handleRegister} disabled={loading}>
-              {loading ? "Sending OTP..." : "Register & Send OTP"}
+            <button type="submit" disabled={registerMutation.isLoading}>
+              {registerMutation.isLoading ? "Sending OTP..." : "Register & Send OTP"}
             </button>
-          </>
+          </form>
         )}
 
         {step === "OTP" && (
           <>
             <p className="otp-text">
-              Enter OTP sent to <b>{form.phone_number}</b>
+              Enter OTP sent to <b>{watchPhone()}</b>
             </p>
-
             <OtpInput otp={otp} setOtp={setOtp} />
-
-            <button onClick={handleVerify} disabled={loading}>
-              {loading ? "Verifying..." : "Verify OTP"}
+            <button onClick={handleVerify} disabled={verifyMutation.isLoading}>
+              {verifyMutation.isLoading ? "Verifying..." : "Verify OTP"}
             </button>
 
             {timer > 0 ? (
@@ -185,8 +157,7 @@ const Register = () => {
         )}
       </div>
     </div>
-  </div>
-);
-}
+  );
+};
 
 export default Register;

@@ -1,63 +1,91 @@
-/* Layout */
-.register-wrapper {
-  display: flex;
-  height: 100vh;
+.register-page {
+  background: linear-gradient(135deg, #ffe6f0, #ffc0cb);
 }
 
-/* LEFT SIDE */
-.register-left {
-  flex: 1;
-  background: url("https://images.unsplash.com/photo-1519741497674-611481863552")
-    no-repeat center center/cover;
-  position: relative;
-}
-
-.register-left .overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 40px;
-}
-
-/* RIGHT SIDE */
-.register-right {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f8fafc;
-}
-
-/* FORM BOX */
 .register-box {
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* INPUTS */
+.register-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+.register-box h2 {
+  color: #ff1493;
+  font-weight: bold;
+}
+
 .register-box input {
-  padding: 10px;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 10px;
   border: 1px solid #ddd;
-  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
-/* BUTTON */
+.register-box input:focus {
+  border-color: #ff69b4;
+  box-shadow: 0 0 0 0.2rem rgba(255,105,180,0.25);
+  outline: none;
+}
+
 .register-box button {
-  padding: 10px;
-  background: #2563eb;
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  border-radius: 10px;
   border: none;
-  color: white;
-  border-radius: 6px;
+  background-color: #ff69b4;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-/* ERROR */
+.register-box button:hover {
+  background-color: #ff1493;
+  transform: translateY(-2px);
+}
+
 .error {
   color: red;
+  margin-bottom: 0.5rem;
+}
+
+.invalid-feedback {
+  color: red;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.otp-text {
+  margin: 1rem 0;
+  font-weight: 500;
+  color: #333;
+}
+
+.timer {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #ff1493;
+}
+
+.resend {
+  background-color: transparent;
+  color: #ff1493;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 0.5rem;
 }
