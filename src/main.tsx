@@ -12,6 +12,7 @@ import VendorDetailsPage from "./pages/vendors-details-page";
 import BlogsPage from "./pages/blogs-page";
 import BlogDetailsPage from "./pages/blog-details-page";
 import Register from "./pages/register";
+import Login from "./pages/login";
 
 // ✅ Create QueryClient
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/blogs" element={<BlogsPage />} />
           <Route path="/blogs/:id" element={<BlogDetailsPage />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />}/>
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

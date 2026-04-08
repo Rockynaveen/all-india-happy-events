@@ -1,0 +1,178 @@
+/* 🌌 Background */
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #bcc1cc, #f4f7fc);
+  font-family: "Inter", sans-serif;
+}
+
+/* 🧾 Card */
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  background: #ff0090;
+  backdrop-filter: blur(18px);
+  border-radius: 16px;
+  padding: 32px 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  animation: fadeIn 0.5s ease;
+}
+
+/* ✨ Heading */
+.login-card h3 {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+/* 📱 Input Group */
+.input-group-custom {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+  transition: 0.3s ease;
+}
+
+.input-group-custom:focus-within {
+  border: 1px solid #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+/* +91 */
+.country-code {
+  margin-right: 8px;
+  font-weight: 500;
+  color: #01070f;
+}
+
+/* Input */
+.input-group-custom input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  width: 100%;
+  font-size: 15px;
+}
+
+.input-group-custom input::placeholder {
+  color: #94a3b8;
+}
+
+/* ❗ Error */
+.error {
+  background: rgba(255, 0, 0, 0.1);
+  color: #f87171;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.invalid-feedback {
+  color: #f87171;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+/* 🔘 Button */
+button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  /* background: linear-gradient(135deg, #6366f1, #4f46e5); */
+  color: #0f011f;
+  font-weight: 500;
+  /* margin-top: 10px; */
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+}
+
+/* 🔄 Disabled */
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 🔢 OTP Section */
+.otp-text {
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: #01030a;
+  text-align: center;
+}
+
+/* 🔢 OTP Inputs */
+.otp-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.otp-input {
+  width: 45px;
+  height: 50px;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.1);
+  color: #120303;
+  transition: 0.3s;
+}
+
+.otp-input:focus {
+  border: 1px solid #6366f1;
+  box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+  outline: none;
+}
+
+/* ⏳ Timer */
+.timer {
+  font-size: 13px;
+  color: #94a3b8;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* 🔁 Resend */
+.resend {
+  background: none;
+  border: none;
+  color: #818cf8;
+  font-size: 13px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.resend:hover {
+  text-decoration: underline;
+}
+
+/* 🎬 Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
