@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 import { photographerTabs } from "../../data/pre-event-photographer/faq-data";
+=======
+// import { photographerTabs } from "../../data/pre-event-photographer/faq-data";
+>>>>>>> cb3e55f (final commit)
 import AccordionItem from "../pre-event-photographer/accordion";
 
 const PhotographerTabs: React.FC = () => {

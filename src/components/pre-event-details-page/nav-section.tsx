@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import NavItem from "./nav";
+<<<<<<< HEAD
 import { navItems } from "../../data/pre-event-photographer/pre-event-details/nav-data";
+=======
+// import { navItems } from "../../data/pre-event-photographer/pre-event-details/nav-data";
+>>>>>>> cb3e55f (final commit)
 
 const VendorNav = () => {
     const [active, setActive] = useState<string>("");

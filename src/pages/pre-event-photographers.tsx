@@ -8,11 +8,19 @@ import PlannerSection from "../components/pre-event-photographer/contact-section
 import PhotographerTabs from "../components/pre-event-photographer/faq-tabs";
 // Vendors
 import VendorImageSection from "../components/pre-event-photographer/image-section";
+<<<<<<< HEAD
 import { vendors } from "../data/pre-event-photographer/image-data";
 
 // Filters
 import FilterSection from "../components/pre-event-photographer/filter-section";
 import { filterData } from "../data/pre-event-photographer/filter-data";
+=======
+// import { vendors } from "../data/pre-event-photographer/image-data";
+
+// Filters
+import FilterSection from "../components/pre-event-photographer/filter-section";
+// import { filterData } from "../data/pre-event-photographer/filter-data";
+>>>>>>> cb3e55f (final commit)
 
 const PreEventPhotographers = (): JSX.Element => {
     return (

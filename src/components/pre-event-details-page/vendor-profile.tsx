@@ -5,7 +5,11 @@ import VendorTabs from "./vendor-tabs";
 import VendorActions from "./vendor-actions";
 
 // ✅ IMPORT DATA
+<<<<<<< HEAD
 import profileData from "../../data/pre-event-photographer/pre-event-details/profile-data";
+=======
+// import profileData from "../../data/pre-event-photographer/pre-event-details/profile-data";
+>>>>>>> cb3e55f (final commit)
 
 // ✅ TYPES
 type Props = {

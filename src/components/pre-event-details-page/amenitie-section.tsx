@@ -1,5 +1,9 @@
 import AmenityItem from "./amenitie-item";
+<<<<<<< HEAD
 import { amenitiesData } from "../../data/pre-event-photographer/pre-event-details/amenities-data";
+=======
+// import { amenitiesData } from "../../data/pre-event-photographer/pre-event-details/amenities-data";
+>>>>>>> cb3e55f (final commit)
 
 const AmenitiesSection = () => {
     return (

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { archives } from "../../data/blogs/archive-data";
+=======
+// import { archives } from "../../data/blogs/archive-data";
+>>>>>>> cb3e55f (final commit)
 import ArchiveItem from "./archieve-card";
 
 const ArchivesSection = () => {

@@ -6,7 +6,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
 import BlogCard from "./blogcard";
+<<<<<<< HEAD
 import { blogs } from "../data/blog";
+=======
+// import { blogs } from "../data/blog";
+>>>>>>> cb3e55f (final commit)
 
 export default function BlogSlider() {
     return (

@@ -5,8 +5,13 @@ import { useNavigate } from "react-router-dom";
 
 import { registerSchema } from "../schema/auth-schema";
 import type { RegisterFormInputs } from "../schema/auth-schema";
+<<<<<<< HEAD
 import { registerUser, verifyOtp, resendOtp } from "../api/auth-api";
 import { useAuthStore } from "../store/auth-store";
+=======
+// import { registerUser, verifyOtp, resendOtp } from "../api/auth-api";
+import { useAuthStore } from "../store/user-store";
+>>>>>>> cb3e55f (final commit)
 import OtpInput from "../components/otp-input";
 import "../assets/css/register.css"
 

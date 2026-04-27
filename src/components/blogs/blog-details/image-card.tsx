@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { blogDetailsData } from "../../../data/blogs/blog-details-data/image-data";
+=======
+// import { blogDetailsData } from "../../../data/blogs/blog-details-data/image-data";
+>>>>>>> cb3e55f (final commit)
 
 const BlogDetailsSection = () => {
     return (

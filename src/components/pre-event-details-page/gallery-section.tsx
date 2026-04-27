@@ -1,5 +1,9 @@
 import  GalleryItem from "./gallery-item";
+<<<<<<< HEAD
 import { galleryData } from "../../data/pre-event-photographer/pre-event-details/gallery-data";
+=======
+// import { galleryData } from "../../data/pre-event-photographer/pre-event-details/gallery-data";
+>>>>>>> cb3e55f (final commit)
 
 const GallerySection = () => {
     return (

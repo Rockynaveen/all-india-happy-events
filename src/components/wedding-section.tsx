@@ -1,5 +1,9 @@
 import WeddingCard from "./wedding-cards";
+<<<<<<< HEAD
 import { weddings } from "../data/wedding-data";
+=======
+// import { weddings } from "../data/wedding-data";
+>>>>>>> cb3e55f (final commit)
 
 const RealWeddings = () => {
     return (

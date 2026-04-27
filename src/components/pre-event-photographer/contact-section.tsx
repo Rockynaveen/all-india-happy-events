@@ -2,7 +2,11 @@
 
 import React from "react";
 import PlannerCard from "../pre-event-photographer/contact-card";
+<<<<<<< HEAD
 import { plannerData } from "../../data/pre-event-photographer/contact-data"
+=======
+// import { plannerData } from "../../data/pre-event-photographer/contact-data"
+>>>>>>> cb3e55f (final commit)
 
 const PlannerSection: React.FC = () => {
   return (

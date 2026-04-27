@@ -1,4 +1,5 @@
 import {
+<<<<<<< HEAD
     IconCake,
     IconShirt,
     IconIceCream2,
@@ -61,6 +62,77 @@ const Hero = ({ onSearch }: HeroProps) => {
             </div>
         </section>
     );
+=======
+  IconCake,
+  IconShirt,
+  IconIceCream2,
+  IconFlower,
+  IconMusic,
+  IconDots,
+} from "@tabler/icons-react";
+
+import { ReactNode } from "react";
+import SearchBar from "./searchbar";
+
+type Category = {
+  id: number;
+  name: string;
+  icon: string;
+};
+
+type HeroData = {
+  title: string;
+  subtitle: string;
+  categories: Category[];
+};
+
+type HeroProps = {
+  onSearch?: (category: string, location: string) => void;
+  data: HeroData;
+};
+
+const iconMap: Record<string, ReactNode> = {
+  cake: <IconCake size={28} />,
+  fashion: <IconShirt size={28} />,
+  desserts: <IconIceCream2 size={28} />,
+  flowers: <IconFlower size={28} />,
+  music: <IconMusic size={28} />,
+  more: <IconDots size={28} />,
+};
+
+// ✅ No React.FC
+const Hero = ({ onSearch, data }: HeroProps) => {
+  return (
+    <section className="slider-wrap style-second">
+      <div className="slider-content">
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-10 col-lg-12 mx-auto text-center">
+
+              <h1>{data.title}</h1>
+              <p className="lead txt-white">{data.subtitle}</p>
+
+              <SearchBar onSearch={onSearch} />
+
+              <p className="lead txt-white mt-4">
+                Or browse featured categories
+              </p>
+
+              <div className="slider-category d-flex justify-content-center gap-4 mt-3">
+                {data.categories.map((item) => (
+                  <a key={item.id} href="#" title={item.name}>
+                    {iconMap[item.icon] ?? <IconDots size={28} />}
+                  </a>
+                ))}
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+>>>>>>> cb3e55f (final commit)
 };
 
 export default Hero;

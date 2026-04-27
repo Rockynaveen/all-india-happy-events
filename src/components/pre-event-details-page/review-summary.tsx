@@ -1,6 +1,10 @@
 import React from "react";
 import ReviewOption from "../../components/pre-event-details-page/review-option";
+<<<<<<< HEAD
 import reviewData from "../../data/pre-event-photographer/pre-event-details/review-data";
+=======
+// import reviewData from "../../data/pre-event-photographer/pre-event-details/review-data";
+>>>>>>> cb3e55f (final commit)
 
 const ReviewSummary = () => {
   return (

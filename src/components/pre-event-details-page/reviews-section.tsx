@@ -1,5 +1,9 @@
 import React from "react";
+<<<<<<< HEAD
 import { reviewsData } from "../../data/pre-event-photographer/pre-event-details/review-list-data";import ReviewItem from "./reply-item";
+=======
+// import { reviewsData } from "../../data/pre-event-photographer/pre-event-details/review-list-data";import ReviewItem from "./reply-item";
+>>>>>>> cb3e55f (final commit)
 import  type { ReviewType } from "../../types/pre-event-photographer/pre-event-details/reply-type"; // adjust path if needed
 
 const ReviewsSection: React.FC = () => {

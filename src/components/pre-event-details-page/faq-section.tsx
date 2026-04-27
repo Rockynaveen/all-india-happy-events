@@ -1,5 +1,9 @@
 import React from "react";
+<<<<<<< HEAD
 import faqData from "../../data/pre-event-photographer/pre-event-details/faq-data";
+=======
+// import faqData from "../../data/pre-event-photographer/pre-event-details/faq-data";
+>>>>>>> cb3e55f (final commit)
 import FaqRow from "./faq-row";
 
 const FaqSection: React.FC = () => {

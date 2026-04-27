@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { videoData } from "../../data/pre-event-photographer/pre-event-details/video-data";
+=======
+// import { videoData } from "../../data/pre-event-photographer/pre-event-details/video-data";
+>>>>>>> cb3e55f (final commit)
 
 const VideoSection = () => {
   return (

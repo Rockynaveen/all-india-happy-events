@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { tags } from "../../data/blogs/tag-data";
+=======
+// import { tags } from "../../data/blogs/tag-data";
+>>>>>>> cb3e55f (final commit)
 import TagItem from "./tag-card";
 
 const TagsSection = () => {

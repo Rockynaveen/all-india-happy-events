@@ -1,6 +1,10 @@
 import React from "react";
 import SliderImages from "./slider";
+<<<<<<< HEAD
 import sliderImages from "../../data/pre-event-photographer/pre-event-details/slider-data";
+=======
+// import sliderImages from "../../data/pre-event-photographer/pre-event-details/slider-data";
+>>>>>>> cb3e55f (final commit)
 
 type Props = {
   activeTab: string;

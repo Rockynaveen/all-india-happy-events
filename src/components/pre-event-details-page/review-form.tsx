@@ -1,6 +1,10 @@
 import React from "react";
 import RatingOption from "./rating-option";
+<<<<<<< HEAD
 import ratingData from "../../data/pre-event-photographer/pre-event-details/review-rating-data";
+=======
+// import ratingData from "../../data/pre-event-photographer/pre-event-details/review-rating-data";
+>>>>>>> cb3e55f (final commit)
 
 const ReviewForm: React.FC = () => {
   return (

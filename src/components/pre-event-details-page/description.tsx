@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { descriptionData } from "../../data/pre-event-photographer/pre-event-details/description-data";
+=======
+// import { descriptionData } from "../../data/pre-event-photographer/pre-event-details/description-data";
+>>>>>>> cb3e55f (final commit)
 
 const DescriptionSection = () => {
     return (

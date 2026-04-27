@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { categories } from "../../data/blogs/category-data";
+=======
+// import { categories } from "../../data/blogs/category-data";
+>>>>>>> cb3e55f (final commit)
 import CategoryItem from "./category-card";
 
 const CategoriesSection = () => {

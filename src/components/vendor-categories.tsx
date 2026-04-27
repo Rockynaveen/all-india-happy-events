@@ -1,5 +1,9 @@
 import VendorCategoryCard from "./vendors-card";
+<<<<<<< HEAD
 import { vendorCategories } from "../data/vendors-data";
+=======
+// import { vendorCategories } from "../data/vendors-data";
+>>>>>>> cb3e55f (final commit)
 
 const VendorCategories = () => {
     return (

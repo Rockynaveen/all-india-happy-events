@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { popularPosts } from "../../data/blogs/popular-data";
+=======
+// import { popularPosts } from "../../data/blogs/popular-data";
+>>>>>>> cb3e55f (final commit)
 import PopularPostItem from "./popular-post";
 
 const PopularPostsSection = () => {

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Header from "../components/header";
 import "../assets/css/style.css";
 import "../assets/css/base.css";
@@ -29,3 +30,42 @@ const Homepage = () => {
 };
 
 export default Homepage;
+=======
+
+import Hero from "../components/home/hero";
+import CategoriesSection from "../components/home/popular-categories"
+import PopularVenues from "../components/home/popular-venues";
+import VendorsSection from "../components/home/vendor-section";
+
+import { useHomeData } from "../hooks/use-home";
+
+import "../assets/css/style.css";
+
+const HomePage = () => {
+  const { data, isLoading, error } = useHomeData();
+
+  return (
+    <>
+
+      {/* 🔄 Loading */}
+      {isLoading && <p className="text-center py-5">Loading...</p>}
+
+      {/* ❌ Error */}
+      {error && <p className="text-center py-5">Something went wrong</p>}
+
+      {/* ✅ Main Content */}
+      {!isLoading && !error && data && (
+        <>
+          <Hero data={data.hero} />
+          <CategoriesSection categories={data.categories} />
+          <PopularVenues venues={data.venues} />
+          <VendorsSection vendors={data.vendors} /> {/* ✅ FIXED */}
+        </>
+      )}
+
+    </>
+  );
+};
+
+export default HomePage;
+>>>>>>> cb3e55f (final commit)

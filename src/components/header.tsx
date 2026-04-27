@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/images/aLl_happy_events_final.png';
 
 const Header = () => {
+<<<<<<< HEAD
   const navLinks = [
     {
       name: "Venues",
@@ -82,6 +83,47 @@ const Header = () => {
 
   return (
     <header className="fixed-top header-anim">
+=======
+const navLinks = [
+  // {
+  //   name: "Venues",
+  //   link: "#"
+  // },
+  {
+    name: "Vendors",
+    link: "./vendors",
+    megaMenu: [
+      {
+        title: "Photographers",
+        links: [
+          { label: "Photographers", path: "/vendors/photographers" },
+          { label: "Videographers", path: "/vendors/videographers" }
+        ]
+      }
+    ]
+  },
+
+  {
+    name: "Real Weddings",
+    link: "./real-weddings"
+  },
+
+  {
+    name: "Blog",
+    link: "/blogs",
+    megaMenu: [/* unchanged */]
+  },
+
+  // ✅ ADD THIS
+  {
+    name: "FAQ",
+    link: "/faqs"
+  }
+];
+
+  return (
+    <header className=" header-anim">
+>>>>>>> cb3e55f (final commit)
       <nav className="navbar navbar-expand-lg bdr-nav w-100 px-3">
 
         {/* LOGO */}
