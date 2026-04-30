@@ -92,15 +92,7 @@ const navLinks = [
   {
     name: "Vendors",
     link: "./vendors",
-    megaMenu: [
-      {
-        title: "Photographers",
-        links: [
-          { label: "Photographers", path: "/vendors/photographers" },
-          { label: "Videographers", path: "/vendors/videographers" }
-        ]
-      }
-    ]
+    
   },
 
   {
@@ -111,7 +103,6 @@ const navLinks = [
   {
     name: "Blog",
     link: "/blogs",
-    megaMenu: [/* unchanged */]
   },
 
   // ✅ ADD THIS

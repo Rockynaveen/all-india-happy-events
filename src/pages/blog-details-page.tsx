@@ -60,7 +60,7 @@ const BlogDetailsPage = () => {
                         <div className="row">
 
                             {/* LEFT SIDE */}
-                            <div className="col-lg-8 col-md-12">
+                            <div className="col-lg-12 col-md-12">
 
                                 <div className="post-content mb-0">
 

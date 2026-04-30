@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import "../assets/css/style.css";
 
 const VendorsPage = () => {
@@ -8,13 +9,13 @@ const VendorsPage = () => {
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        const res = await fetch(
+        const res = await axios.get(
           "https://allhappyevents.jbservices.in/api/vendors"
         );
-        const json = await res.json();
-        setVendors(json?.data?.vendors || []);
-      } catch (err) {
-        console.error("Error fetching vendors:", err);
+
+        setVendors(res?.data?.data?.vendors || []);
+      } catch (error) {
+        console.error("API Error:", error);
       } finally {
         setLoading(false);
       }
@@ -28,156 +29,108 @@ const VendorsPage = () => {
   }
 
   return (
-    <>
+    <div className="container tab-pane fade show active my-5" id="pills-images ">
 
-      <main id="body-content">
+      <div className=" row">
 
-        <section className="wide-tb-90">
-          <div className="container">
+        {vendors.map((vendor: any) => (
+          <div className="col-lg-6 col-md-6" key={vendor.id}>
+            <div className="wedding-listing">
 
-            <div
-              className="tab-content theme-tabbing search-result-tabbing"
-              id="pills-tabContent"
-            >
+              {/* IMAGE SECTION */}
+              <div className="img">
 
-              <div
-                className="tab-pane fade active show"
-                id="pills-listing"
-                role="tabpanel"
-                aria-labelledby="pills-listing-tab"
-              >
+                <a href={`/vendors/${vendor.slug}`}>
+                  <img src={vendor.thumbnail} alt={vendor.brand_name} />
+                </a>
 
-                {vendors.map((vendor: any) => (
-                  <div className="result-list" key={vendor.id}>
-                    <div className="row">
+                <div className="img-content">
 
-                      {/* IMAGE */}
-                      <div className="col-md-4">
-                        <div className="img">
+                  <div className="top">
 
-                          {vendor.is_premium && (
-                            <span className="featured">
-                              <i className="fa fa-star"></i>
-                              <span>Handpicked</span>
-                            </span>
-                          )}
+                    {vendor.is_premium && (
+                      <span className="featured">
+                        <i className="fa fa-star"></i>
+                        <span>Handpicked</span>
+                      </span>
+                    )}
 
-                          <a href={`/vendors/${vendor.slug}`}>
-                            <img
-                              src={vendor.thumbnail}
-                              alt={vendor.brand_name}
-                              className="rounded"
-                            />
-                          </a>
+                    <span className="price">
+                      <i className="fa fa-tag"></i>
+                      <span>
+                        ₹{Number(vendor.per_day_price).toLocaleString("en-IN")}
+                      </span>
+                    </span>
 
-                        </div>
-                      </div>
-
-                      {/* CONTENT */}
-                      <div className="col-md-8">
-                        <div className="content">
-
-                          <div className="head">
-
-                            {/* <a href="#" className="favorite color-white active">
-                              <i className="fa fa-heart"></i>
-                            </a> */}
-
-                            <h3>
-                              <a href={`/vendors/${vendor.slug}`}>
-                                {vendor.brand_name}
-                              </a>
-                            </h3>
-
-                            {/* RATING */}
-                            <div className="rating">
-                              <span className="stars">
-                                {Array.from({ length: 5 }).map((_, i) => (
-                                  <i
-                                    key={i}
-                                    className={
-                                      i < vendor.rating
-                                        ? "fa fa-star"
-                                        : "fa-regular fa-star"
-                                    }
-                                  ></i>
-                                ))}
-                              </span>
-
-                              ({vendor.total_reviews} review)
-                            </div>
-
-                          </div>
-
-                          {/* LOCATION */}
-                          <p className="text-muted">
-                            <i className="fa-solid fa-location-dot"></i>{" "}
-                            {vendor.address?.city_id}, {vendor.address?.state_id}
-                          </p>
-
-                          {/* SERVICES */}
-                          <p className="text-muted">
-                            {vendor.menus?.length > 0
-                              ? vendor.menus.map((m: any) => m.name).join(" + ")
-                              : "Photo + Video"}
-                          </p>
-
-                          {/* PRICE */}
-                          <h4 className="fw-bold">
-                            <i className="fa-solid fa-indian-rupee-sign"></i>{" "}
-                            {Number(vendor.per_day_price).toLocaleString("en-IN")} per day
-                          </h4>
-
-                          {/* BOTTOM */}
-                          <div className="bottom">
-
-                            {/* REMOVED FAKE DATA - CLEAN UI */}
-                            <a href="#">
-                              <span className="badge border bg-primary rounded p-2">
-                                {vendor.total_reviews} Reviews
-                              </span>
-                            </a>
-
-                            <div className="hover-more">
-                              <a href="#">
-                                <span className="badge border rounded p-2 more-btn bg-primary">
-                                  {vendor.menus?.length || 1} Services
-                                </span>
-                              </a>
-
-                              <ul className="more-list">
-                                <li>Based on customer reviews</li>
-                                <li>Verified Vendor</li>
-                                <li>Active in platform</li>
-                              </ul>
-                            </div>
-
-                            <a
-                              href={`/vendors/${vendor.slug}`}
-                              className="btn btn-outline-primary bg-primary text-white btn-rounded"
-                            >
-                              View Details
-                            </a>
-
-                          </div>
-
-                        </div>
-                      </div>
-
-                    </div>
                   </div>
-                ))}
+
+                  <div className="bottom">
+
+                    <a className="tags" href={`/vendors/${vendor.slug}`}>
+                      {vendor.menus?.length > 0
+                        ? vendor.menus.map((m: any) => m.name).join(" + ")
+                        : "Photo + Video"}
+                    </a>
+
+                    <a className="favorite" href="javascript:void(0)">
+                      <i className="fa fa-heart-o"></i>
+                    </a>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              {/* CONTENT */}
+              <div className="content">
+
+                <div className="gap">
+
+                  <h3>
+                    <a href={`/vendors/${vendor.slug}`}>
+                      {vendor.brand_name}
+                      <span className="verified">
+                        <i className="fa fa-check-circle"></i>
+                      </span>
+                    </a>
+                  </h3>
+
+                  <div>
+                    <i className="fa fa-map-marker"></i>{" "}
+                    {vendor.address?.city_id}, {vendor.address?.state_id}
+                  </div>
+
+                </div>
+
+                <div className="reviews">
+
+                  <span className="stars">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <i
+                        key={i}
+                        className={
+                          i < vendor.rating
+                            ? "fa fa-star"
+                            : "fa-regular fa-star"
+                        }
+                      />
+                    ))}
+                  </span>
+
+                  ({vendor.total_reviews} review)
+
+                </div>
 
               </div>
 
             </div>
-
           </div>
-        </section>
+        ))}
 
-      </main>
+      </div>
 
-    </>
+    </div>
   );
 };
 

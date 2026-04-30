@@ -100,7 +100,6 @@ const iconMap: Record<string, ReactNode> = {
   more: <IconDots size={28} />,
 };
 
-// ✅ No React.FC
 const Hero = ({ onSearch, data }: HeroProps) => {
   return (
     <section className="slider-wrap style-second">

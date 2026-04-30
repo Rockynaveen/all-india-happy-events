@@ -102,32 +102,9 @@ const RealWeddingsPage = () => {
 
           </div>
 
-          {/* PAGINATION (static for now) */}
-          <div className="col-md-12">
-            <div className="theme-pagination">
-              <nav>
-                <ul className="pagination justify-content-center">
-                  <li className="page-item disabled">
-                    <a className="page-link" href="#">
-                      <i className="fa fa-angle-left"></i>
-                    </a>
-                  </li>
-                  <li className="page-item active">
-                    <a className="page-link" href="#">1</a>
-                  </li>
-                  <li className="page-item"><a className="page-link" href="#">2</a></li>
-                  <li className="page-item"><a className="page-link" href="#">3</a></li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      <i className="fa fa-angle-right"></i>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
+        
           </div>
 
-        </div>
       </section>
 
     </>

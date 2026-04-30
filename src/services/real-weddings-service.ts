@@ -1,3 +1,4 @@
+// ✅ CORRECT
 import { api } from "../api/api";
 
 export const getRealWeddings = async () => {

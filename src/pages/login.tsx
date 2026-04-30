@@ -160,27 +160,35 @@ const Login = () => {
 
 =======
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { zodResolver,} from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router";
-import PhoneInput from "../components/phone-otp";
-import { useSendOtp } from "../hooks/user-auth";
+import { useSendOtp } from "../hooks/use-auth";
+import { useNavigate } from "react-router-dom";
+
 const schema = z.object({
-  phone: z.string().length(10, "Phone must be 10 digits"),
+  phone: z.string().min(10),
 });
-const Login = () => {
+
+type FormData = z.infer<typeof schema>;
+
+const LoginPage = () => {
   const navigate = useNavigate();
-  const { mutate, isPending, error } = useSendOtp();
-  const {register,handleSubmit,formState: { errors },}=useForm({resolver: zodResolver(schema),});
-  const onSubmit = (data: any) => {
-    mutate(data.phone, {
-      onSuccess: (data) => {
-        console.log("SEND OTP API =>", data.formattedPhone);
-        navigate("/verify-otp?phone=" + data.formattedPhone );
+  const { mutate, isPending } = useSendOtp();
+
+  const { register, handleSubmit } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
+
+  const onSubmit = (data: FormData) => {
+    mutate(data, {
+      onSuccess: () => {
+        navigate("/verify-otp", { state: { phone: data.phone } });
       },
     });
   };
+
   return (
+<<<<<<< HEAD
     <div className="container d-flex align-items-center justify-content-center vh-100 bg-light">
       <div className="card shadow-lg p-4" style={{ width: "400px" }}>
         <h3 className="text-center mb-3">Login</h3>
@@ -205,3 +213,13 @@ const Login = () => {
 =======
 >>>>>>> cb3e55f (final commit)
 export default Login;
+=======
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register("phone")} placeholder="Enter phone" />
+      <button disabled={isPending}>Send OTP</button>
+    </form>
+  );
+};
+
+export default LoginPage;
+>>>>>>> c878c0b (added vendor services, auth store, updated types, removed unused stores)

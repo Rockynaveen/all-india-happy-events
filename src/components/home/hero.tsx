@@ -1,79 +1,109 @@
-import {
-  IconBuilding,
-  IconCamera,
-  IconBrush,
-  IconDots
-} from "@tabler/icons-react";
-
-type Category = {
+interface Category {
   id: number;
   name: string;
   slug: string;
-  image: string;
-};
+}
 
-type HeroData = {
-  title?: string;
-  subtitle?: string;
-  categories?: Category[];
-};
+interface City {
+  id: number;
+  name: string;
+}
 
-type HeroProps = {
-  data?: HeroData;
-};
+interface HeroProps {
+  data: {
+    categories: Category[];
+    cities: City[];
+  };
+}
 
-// 🔥 Map based on CATEGORY NAME
-const iconMap: Record<string, JSX.Element> = {
-  venues: <IconBuilding size={28} />,
-  "photo & vedio graphers": <IconCamera size={28} />,
-  makeup: <IconBrush size={28} />,
-};
-
-const getIcon = (name?: string) => {
-  if (!name) return <IconDots size={28} />;
-
-  const key = name.toLowerCase().trim();
-  return iconMap[key] || <IconDots size={28} />;
+// 🔹 icon mapping
+const getIcon = (name: string) => {
+  if (name.toLowerCase().includes("venue")) return "weddingdir_venue";
+  if (name.toLowerCase().includes("photo")) return "weddingdir_camera";
+  if (name.toLowerCase().includes("makeup")) return "weddingdir_fashion";
+  if (name.toLowerCase().includes("decor")) return "weddingdir_flowers";
+  if (name.toLowerCase().includes("music")) return "weddingdir_music";
+  return "weddingdir_cake_floor";
 };
 
 const Hero = ({ data }: HeroProps) => {
-
-  if (!data) {
-    return (
-      <section className="slider-wrap style-second">
-        <div className="text-center py-5">Loading hero...</div>
-      </section>
-    );
-  }
+  const categories = data?.categories || [];
+  const cities = data?.cities || [];
 
   return (
     <section className="slider-wrap style-second">
       <div className="slider-content">
         <div className="container">
           <div className="row">
-            <div className="col-xl-10 col-lg-12 mx-auto text-center">
+            <div className="col-xl-10 col-lg-12 mx-auto">
 
-              {/* TITLE */}
-              <h1>{data.title || "Find Trusted Event Services"}</h1>
+              <h1>Find Most Trusted Vendors for All Your Celebrations</h1>
 
-              {/* SUBTITLE */}
-              <p className="lead txt-white">
-                {data.subtitle || "Explore venues, photographers, makeup artists and more"}
+              <p className="lead txt-white text-center">
+                Explore verified venues, photographers, makeup artists, and more —
+                with genuine reviews, transparent pricing, and real availability.
               </p>
 
-              <p className="lead txt-white mt-4">
-                Browse Categories
+              {/* 🔥 SEARCH BOX */}
+              <div className="form-bg row no-gutters align-items-center">
+
+                {/* CATEGORY */}
+                <div className="col-12 col-md-5">
+                  <select className="form-light-select theme-combo home-select-1 py-2">
+                    <option>Select Vendor Category</option>
+
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.slug}>
+                        {cat.name === "Photo & Vedio Graphers"
+                          ? "Photography & Films"
+                          : cat.name}
+                      </option>
+                    ))}
+
+                  </select>
+                </div>
+
+                {/* LOCATION */}
+                <div className="col-12 col-md-5">
+                  <div className="px-2 w-100">
+                    <select className="form-light-select theme-combo home-select-2 py-2">
+                      <option>Select Location</option>
+
+                      {cities.map((city) => (
+                        <option key={city.id} value={city.name}>
+                          {city.name}
+                        </option>
+                      ))}
+
+                    </select>
+                  </div>
+                </div>
+
+                {/* BUTTON */}
+                <div className="col-12 col-md-2">
+                  <a href="#" className="btn btn-default text-nowrap btn-block">
+                    Search Now
+                  </a>
+                </div>
+
+              </div>
+
+              <p className="lead txt-white text-center">
+                Or browse featured categories
               </p>
 
-              {/* 🔥 REAL CATEGORIES */}
-              <div className="slider-category d-flex justify-content-center gap-4 mt-3 flex-wrap">
+              {/* 🔥 ICONS */}
+              <div className="slider-category">
 
-                {data.categories?.map((cat) => (
-                  <a key={cat.id} href="#" title={cat.name}>
-                    <div>{getIcon(cat.name)}</div>
-                    <small>{cat.name}</small>
+                {categories.slice(0, 5).map((cat) => (
+                  <a key={cat.id} href="#">
+                    <i className={getIcon(cat.name)}></i>
                   </a>
                 ))}
+
+                <a href="#" className="more-icon">
+                  <i className="fa-solid fa-ellipsis"></i>
+                </a>
 
               </div>
 

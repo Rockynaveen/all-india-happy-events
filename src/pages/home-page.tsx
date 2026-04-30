@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Header from "../components/header";
 import "../assets/css/style.css";
 import "../assets/css/base.css";
@@ -32,36 +33,42 @@ const Homepage = () => {
 export default Homepage;
 =======
 
+=======
+>>>>>>> c878c0b (added vendor services, auth store, updated types, removed unused stores)
 import Hero from "../components/home/hero";
-import CategoriesSection from "../components/home/popular-categories"
-import PopularVenues from "../components/home/popular-venues";
-import VendorsSection from "../components/home/vendor-section";
-
+import CategoriesSection from "../components/home/categories-section";
+import PopularLocationsSection from "../components/home/popular-location-sections";
 import { useHomeData } from "../hooks/use-home";
+import VendorCategories from "../components/home/vendor-categories";
+import RealWeddings from "../components/home/real-weddings";
+import LatestBlogs from "../components/home/latest-blogs";
 
 import "../assets/css/style.css";
 
 const HomePage = () => {
   const { data, isLoading, error } = useHomeData();
 
+  if (isLoading) {
+    return <p className="text-center py-5">Loading...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center py-5">Something went wrong</p>;
+  }
+
   return (
     <>
+      <Hero data={data} />
 
-      {/* 🔄 Loading */}
-      {isLoading && <p className="text-center py-5">Loading...</p>}
+      <CategoriesSection categories={data?.categories || []} />
 
-      {/* ❌ Error */}
-      {error && <p className="text-center py-5">Something went wrong</p>}
+      <PopularLocationsSection cities={data?.cities || []} />
 
-      {/* ✅ Main Content */}
-      {!isLoading && !error && data && (
-        <>
-          <Hero data={data.hero} />
-          <CategoriesSection categories={data.categories} />
-          <PopularVenues venues={data.venues} />
-          <VendorsSection vendors={data.vendors} /> {/* ✅ FIXED */}
-        </>
-      )}
+      <VendorCategories />
+      <RealWeddings />
+      <LatestBlogs />
+
+
 
     </>
   );

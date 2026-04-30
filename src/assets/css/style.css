@@ -2393,9 +2393,53 @@ header .btn {
     transition: all 0.15s linear;
   }
 }
+.navbar {
+  position: relative;
+  z-index: 9999;
+}
 
 /*---- Header Regular End ---*/
+/* SLIDER FIX */
+#slider-vendor-single .item {
+  height: 450px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
+/* GALLERY IMAGE FIX */
+.vendor-gallery img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* OPTIONAL: smooth look */
+.vendor-img-gallery .col-md-3 {
+  margin-bottom: 15px;
+}
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.calendar-day {
+  padding: 10px;
+  text-align: center;
+  border-radius: 6px;
+  background: #f5f5f5;
+}
+
+.calendar-day.booked {
+  background: red;
+  color: #fff;
+}
+
+.calendar-day.blocked {
+  background: orange;
+  color: #fff;
+}
 /*---- 5.2 Header Top Bar ---*/
 .top-bar-stripe {
   background:
@@ -2772,6 +2816,21 @@ header .btn {
   margin-top: 15px;
 }
 
+
+.wedding-listing .img {
+  width: 100%;
+  height: 260px; /* fixed height for all cards */
+  overflow: hidden;
+  border-radius: 10px;
+  position: relative;
+}
+
+.wedding-listing .img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* IMPORTANT: keeps image crop clean */
+  display: block;
+}
 /*---- 5.4 Page Header End ---*/
 
 /*-------------------------------------------------------------------
@@ -2893,7 +2952,7 @@ header .btn {
   background-size: cover;
   position: relative;
   min-height: 750px;
-  margin-top: 83px;
+  margin-top: 0px;
 }
 
 .style-second::after {
@@ -2908,7 +2967,7 @@ header .btn {
 
 .form-bg {
   background: rgba(0, 0, 0, 0.4);
-  padding: 4px;
+  padding: 0px;
   border-radius: 5px;
   margin-bottom: 1rem;
 }
@@ -4222,7 +4281,7 @@ header .btn {
 .widget {
   box-shadow: 0px 0px 147px 0px rgba(0, 0, 0, 0.07);
   border-radius: 7px;
-  padding: 1.5rem;
+  padding: 1 px 1px;
 }
 .sidebar-secondary .widget:not(:last-child),
 .sidebar-primary .widget {
@@ -5600,7 +5659,7 @@ button.swiper-pagination-bullet {
 
 .vendor-profile-single {
   background: #f6f6f7;
-  padding: 3rem 0 5rem;
+  padding: 20px 102px;
   font-family: "mulisemibold";
 }
 

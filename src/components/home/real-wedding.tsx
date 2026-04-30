@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import { getRealWeddings } from "../services/realwedding.services";
+import { getRealWeddings } from "../../services/real-weddings-service";
 import "../assets/css/realweddings.css";
 
 export default function RealWeddingsHome() {
@@ -90,4 +90,4 @@ export default function RealWeddingsHome() {
       />
     </section>
   );
-} **
+} 
