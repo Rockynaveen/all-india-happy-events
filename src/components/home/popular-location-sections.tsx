@@ -7,8 +7,8 @@ interface City {
 
 const PopularLocationsSection = ({ cities }: { cities: City[] }) => {
   return (
-    <section className="wide-tb-120 bg-light-gray">
-      <div className="container">
+    <section className="wide bg-light-gray">
+      <div className="container py-5">
         <div className="section-title text-center">
           <h1>Popular Wedding Locations</h1>
           <p>

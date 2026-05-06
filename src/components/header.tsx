@@ -1,198 +1,130 @@
-import { IconArrowRight, IconMenu2, IconShoppingBag } from '@tabler/icons-react';
-import { Link } from 'react-router-dom';
-import logo from '../assets/images/aLl_happy_events_final.png';
+import {
+  IconArrowRight,
+  IconMenu2,
+  IconShoppingBag,
+} from "@tabler/icons-react";
+
+import { Link, useNavigate } from "react-router-dom";
+
+import { useAuthStore } from "../store/auth-store";
+import { useCartStore } from "../store/cart-store";
+
+import logo from "../assets/images/aLl_happy_events_final.png";
 
 const Header = () => {
-<<<<<<< HEAD
+  const navigate = useNavigate();
+
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+
+  const cart = useCartStore((state) => state.cart); 
+
   const navLinks = [
-    {
-      name: "Venues",
-      link: "#"
-    },
-    {
-      name: "Vendors",
-      link: "#",
-      megaMenu: [
-        {
-          title: "Photographers",
-          links: [
-            { label: "Photographers", path: "/vendors/photographers" },
-            { label: "Videographers", path: "/vendors/videographers" }
-          ]
-        },
-        {
-          title: "Pre Event Shoot",
-          links: [
-            { label: "Pre Event Shoot Locations", path: "/pre-event-photographers" },
-            { label: "Pre Event Photographers", path: "/pre-event-photographers" }
-          ]
-        },
-        {
-          title: "Makeup",
-          links: [
-            { label: "Bridal Makeup Artists", path: "#" },
-            { label: "Family Makeup", path: "#" }
-          ]
-        },
-        {
-          title: "Planning & Decor",
-          links: [
-            { label: "Event Planners", path: "#" },
-            { label: "Decorators", path: "#" }
-          ]
-        }
-      ]
-    },
-    {
-      name: "Real Weddings",
-      link: "#"
-    },
-    {
-      name: "Blog",
-      link: "#",
-      megaMenu: [
-        {
-          title: "South Indian Wedding", // MAIN section clickable
-          mainLink: "/blogs", // link to BlogsPage
-          links: [
-            { label: "Bridal Makeup", path: "/blogs" },
-            { label: "Honeymoon Travel", path: "/blogs" },
-            { label: "Bridal Hairstyles", path: "/blogs" },
-            { label: "Event Decor Ideas", path: "/blogs" }
-          ]
-        },
-        {
-          title: "Popular Sections",
-          links: [
-            { label: "Real Brides Reveal", path: "/blogs" },
-            { label: "Bridal Buys", path: "/blogs" },
-            { label: "Mehendi Ideas", path: "/blogs" }
-          ]
-        },
-        {
-          title: "Most Searched",
-          links: [
-            { label: "Best Bridal Entry Songs", path: "/blogs" },
-            { label: "Bridal Mehendi Designs", path: "/blogs" },
-            { label: "Wedding Hashtags", path: "/blogs" }
-          ]
-        }
-      ]
-    }
+    { name: "Vendors", link: "/vendors" },
+    { name: "Real Weddings", link: "/real-weddings" },
+    { name: "Blog", link: "/blogs" },
+    { name: "FAQ", link: "/faqs" },
+    { name: "Events", link: "/eventpackage" },
   ];
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <header className="fixed-top header-anim">
-=======
-const navLinks = [
-  // {
-  //   name: "Venues",
-  //   link: "#"
-  // },
-  {
-    name: "Vendors",
-    link: "./vendors",
-    
-  },
-
-  {
-    name: "Real Weddings",
-    link: "./real-weddings"
-  },
-
-  {
-    name: "Blog",
-    link: "/blogs",
-  },
-
-  // ✅ ADD THIS
-  {
-    name: "FAQ",
-    link: "/faqs"
-  }
-];
-
-  return (
-    <header className=" header-anim">
->>>>>>> cb3e55f (final commit)
       <nav className="navbar navbar-expand-lg bdr-nav w-100 px-3">
-
         {/* LOGO */}
-        <div className="d-flex align-items-center">
-          <Link className="navbar-brand" to="/">
-            <img src={logo} className="header_logo my-2" alt="logo" />
-          </Link>
-        </div>
+        <Link className="navbar-brand" to="/">
+          <img
+            src={logo}
+            className="header_logo my-2"
+            alt="logo"
+          />
+        </Link>
 
-        {/* NAV */}
+        {/* NAV LINKS */}
         <div className="collapse navbar-collapse justify-content-center">
           <ul className="navbar-nav nav-center">
             {navLinks.map((item, index) => (
-              <li key={index} className="nav-item dropdown mega-parent">
-
-                <a className="nav-link" href={item.link}>
+              <li key={index} className="nav-item">
+                <Link className="nav-link" to={item.link}>
                   {item.name}
-                  {item.megaMenu && <i className="fa fa-chevron-down"></i>}
-                </a>
-
-                {/* DROPDOWN */}
-                {item.megaMenu && (
-                  <div className="mega-menu">
-                    <div className="mega-grid">
-                      {item.megaMenu.map((col, i) => (
-                        <div className="mega-col" key={i}>
-                          <h4>
-                            {col.mainLink ? (
-                              <Link to={col.mainLink}>{col.title}</Link>
-                            ) : (
-                              col.title
-                            )}
-                          </h4>
-
-                          {col.links.map((link, j) => (
-                            <Link key={j} to={link.path}>
-                              {link.label}
-                            </Link>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
+                </Link>
               </li>
             ))}
           </ul>
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="d-flex align-items-center ml-auto gx-2 loginsearch">
-          <button className="navbar-toggler p-3">
+        <div className="d-flex align-items-center ms-auto gx-2 loginsearch">
+          {/* MOBILE MENU ICON */}
+          <button className="navbar-toggler p-3" type="button">
             <IconMenu2 />
           </button>
 
           <div className="rr-header-right d-flex align-items-center">
-
-            {/* CART */}
-            <div className="rr-header-icon-card d-none d-xl-block">
+            {/* 🛒 CART */}
+            <Link
+              to="/cart"
+              className="rr-header-icon-card d-none d-xl-block position-relative"
+            >
               <IconShoppingBag className="text-light" />
-              <span>0</span>
-            </div>
 
-            {/* LOGIN BUTTON */}
-            <div className="rr-header-contat d-none d-md-block ml-35">
-              <Link className="rr-btn me-2" to="/login">
-                <span>Login <IconArrowRight /></span>
-              </Link>
-            </div>
+              {/* 🔥 Dynamic Count */}
+              {cart.length > 0 && (
+                <span className="cart-count">
+                  {cart.length}
+                </span>
+              )}
+            </Link>
 
-            {/* REGISTER BUTTON */}
-            <div className="rr-header-contat d-none d-md-block">
-              <Link className="rr-btn register-btn" to="/register">
-                <span>Register <IconArrowRight /></span>
-              </Link>
-            </div>
+            {user ? (
+              <>
+                {/* USER NAME */}
+                <div className="rr-header-contat d-none d-md-block ms-3">
+                  <span className="text-light">
+                    {user.name}
+                  </span>
+                </div>
 
+                {/* LOGOUT */}
+                <div className="rr-header-contat d-none d-md-block ms-3">
+                  <button
+                    className="rr-btn border-0"
+                    onClick={handleLogout}
+                  >
+                    <span>
+                      Logout <IconArrowRight />
+                    </span>
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* LOGIN */}
+                <div className="rr-header-contat d-none d-md-block ms-3">
+                  <Link className="rr-btn me-2" to="/login">
+                    <span>
+                      Login <IconArrowRight />
+                    </span>
+                  </Link>
+                </div>
+
+                {/* REGISTER */}
+                <div className="rr-header-contat d-none d-md-block">
+                  <Link
+                    className="rr-btn register-btn"
+                    to="/register"
+                  >
+                    <span>
+                      Register <IconArrowRight />
+                    </span>
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </nav>

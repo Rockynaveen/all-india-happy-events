@@ -20,8 +20,19 @@ const RealWeddingsPage = () => {
 
   return (
     <>
+    <section className="breadcrumbs-page">
+        <div className="container">
+            <h1>Real Wedding List</h1>
+            <nav aria-label="breadcrumb">
+                <ol className="breadcrumb">
+                    <li className="breadcrumb-item"><a href="javascript:"><i className="fa fa-home"></i></a></li>
+                    <li className="breadcrumb-item active" aria-current="page">Real Wedding List</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
 
-      <section className="wide-tb-90 wedding_padding">
+      <section className="wide wedding_padding">
         <div className="container">
           <div className="row">
 
@@ -30,7 +41,7 @@ const RealWeddingsPage = () => {
                 const images = wedding.galleries || [];
 
                 return (
-                  <div className="col-lg-4 col-md-6" key={wedding.slug}>
+                  <div className="col-lg-4 col-md-6 " key={wedding.slug}>
                     <div className="real-wedding-wrap">
 
                       {/* CARD */}

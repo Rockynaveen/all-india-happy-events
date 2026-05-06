@@ -1,138 +1,73 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getVendors, type Vendor } from "../../services/vendors-home-service";
+import { Link } from "react-router";
 
-const VendorsImagesTab = ({ vendors }: any) => {
-  if (!vendors || vendors.length === 0) {
-    return <p className="text-center py-5">No vendors found</p>;
+const VendorsSection = () => {
+  const [vendors, setVendors] = useState<Vendor[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      const data = await getVendors();
+      setVendors(data);
+      setLoading(false);
+    };
+
+    load();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   return (
-    <div
-      className="tab-pane fade"
-      id="pills-images"
-      role="tabpanel"
-      aria-labelledby="pills-images-tab"
-    >
-      <div className="row">
-        {vendors.map((vendor: any) => {
-          const city = vendor?.address?.city_id || "";
-          const state = vendor?.address?.state_id || "";
+    <section className="wide-tb-120">
+      <div className="container">
+        <div className="section-title text-center">
+          <h1>Top Wedding Vendors</h1>
+          <p>Handpicked professionals trusted by thousands of Indian couples</p>
+        </div>
 
-          return (
-            <div className="col-lg-6 col-md-6" key={vendor.id}>
-              <div className="wedding-listing">
+        <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2">
+
+          {vendors.map((vendor) => (
+            <div className="col" key={vendor.id}>
+              <div className="vendor-wrap-alt">
+
+                {/* IMG SECTION */}
                 <div className="img">
-                  <Link to={`/vendor/${vendor.slug}`}>
-                    <img
-                      src={vendor.thumbnail}
-                      alt={vendor.brand_name}
-                    />
-                  </Link>
+                  <img src={vendor.thumbnail} alt="" />
 
                   <div className="img-content">
-                    <div className="top">
-                      {vendor.is_premium && (
-                        <span className="featured">
-                          <i className="fa fa-star"></i>
-                          <span>Handpicked</span>
-                        </span>
-                      )}
+                    <span className="rating">
+                      {vendor.rating}
+                    </span>
 
-                      <span className="price">
-                        <i className="fa fa-tag"></i>
-                        <span>
-                          ₹{Number(vendor.per_day_price).toLocaleString()}
-                        </span>
-                      </span>
-                    </div>
-
-                    <div className="bottom">
-                      <a className="tags" href="#">
-                        Photo + Video
-                      </a>
-
-                      <a className="favorite" href="#">
-                        <i className="fa fa-heart-o"></i>
-                      </a>
-                    </div>
+                    <a href="javascript:" className="favorite">
+                      <i className="fa-regular fa-heart"></i>                    </a>
                   </div>
                 </div>
 
+                {/* CONTENT SECTION */}
                 <div className="content">
-                  <div className="gap">
+                  <div className="vendor-heading">
                     <h3>
-                      <Link to={`/vendor/${vendor.slug}`}>
+                      <i className="weddingdir_camera"></i>
+                      <Link to={`/vendors/${vendor.slug}`}>
                         {vendor.brand_name}
-                        <span className="verified">
-                          <i className="fa fa-check-circle"></i>
-                        </span>
                       </Link>
                     </h3>
-
-                    <div>
-                      <i className="fa fa-map-marker"></i>{" "}
-                      {city}, {state}, India
-                    </div>
-                  </div>
-
-                  <div className="reviews">
-                    <span className="stars">
-                      {[1, 2, 3, 4, 5].map((star) => {
-                        if (vendor.rating >= star) {
-                          return (
-                            <i key={star} className="fa fa-star"></i>
-                          );
-                        } else if (vendor.rating >= star - 0.5) {
-                          return (
-                            <i
-                              key={star}
-                              className="fa fa-star-half-stroke"
-                            ></i>
-                          );
-                        } else {
-                          return (
-                            <i
-                              key={star}
-                              className="fa fa-regular fa-star"
-                            ></i>
-                          );
-                        }
-                      })}
-                    </span>
-                    ({vendor.total_reviews} review)
                   </div>
                 </div>
+
               </div>
             </div>
-          );
-        })}
+          ))}
+
+        </div>
       </div>
-
-      {/* Pagination */}
-      <div className="theme-pagination">
-        <nav>
-          <ul className="pagination">
-            <li className="page-item disabled">
-              <a className="page-link" href="#">
-                <i className="fa fa-angle-left"></i>
-              </a>
-            </li>
-
-            <li className="page-item active">
-              <a className="page-link" href="#">
-                1
-              </a>
-            </li>
-
-            <li className="page-item disabled">
-              <a className="page-link" href="#">
-                <i className="fa fa-angle-right"></i>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
+    </section>
   );
 };
 
-export default VendorsImagesTab;
+export default VendorsSection;

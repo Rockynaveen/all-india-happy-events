@@ -1,22 +1,74 @@
-import { api } from "../api/api";
-import {
+import api from "../api/api";
+import type {
   SendOtpRequest,
+  SendOtpResponse,
   VerifyOtpRequest,
-  RegisterRequest ,
-  AuthResponse ,
+  VerifyOtpResponse,
+  RegisterRequest,
+  RegisterResponse,
 } from "../types/user.type";
 
-export const sendOtp = async (data: SendOtpRequest) => {
-  const res = await api.post("/send-otp", data);
+// safe phone formatter
+const formatPhone = (phone: string) => {
+  if (!phone) return "";
+  return phone.startsWith("+91") ? phone : `+91${phone}`;
+};
+
+// -------------------- SEND OTP --------------------
+export const sendOtp = async (
+  data: SendOtpRequest
+): Promise<SendOtpResponse> => {
+  const res = await api.post("/send-otp", {
+    phone_number: formatPhone(data.phone_number),
+  });
+
   return res.data;
 };
 
-export const verifyOtp = async (data: VerifyOtpRequest) => {
-  const res = await api.post("/verify-otp", data);
-  return res.data as AuthResponse;
+// -------------------- VERIFY OTP --------------------
+export const verifyOtp = async (
+  data: VerifyOtpRequest
+): Promise<VerifyOtpResponse> => {
+  const res = await api.post("/verify-otp", {
+    phone_number: formatPhone(data.phone_number),
+    otp: data.otp,
+  });
+
+  return res.data;
 };
 
-export const registerUser = async (data: RegisterRequest) => {
-  const res = await api.post("/register", data);
-  return res.data as AuthResponse;
+
+export const resendOtp = async (data: {
+  phone_number: string;
+}) => {
+  const response = await api.post(
+    "/resend-otp",
+    data
+  );
+
+  return response.data;
+};
+
+// -------------------- REGISTER --------------------
+export const registerUser = async (
+  data: RegisterRequest
+): Promise<RegisterResponse> => {
+  const res = await api.post("/register", {
+    name: data.name?.trim(),
+    email: data.email?.trim(),
+
+    // IMPORTANT FIX (most 422 errors come from this)
+    phone_number: formatPhone(data.phone_number),
+  });
+
+  return res.data;
+};
+
+// -------------------- LOGOUT --------------------
+export const logout = async (): Promise<{
+  success: boolean;
+  message: string;
+}> => {
+  const res = await api.post("/auth/logout");
+  return res.data;
 };

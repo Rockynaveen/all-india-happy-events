@@ -1,50 +1,45 @@
-import { Link } from "react-router-dom";
-import "../../assets/css/style.css";
+import { useState } from "react";
+import { useCartStore } from "../../store/cart-store";
 
 const VendorCard = ({ vendor }: any) => {
+  const addToCart = useCartStore((state) => state.addToCart);
+  const [selectedDate, setSelectedDate] = useState("");
+
   return (
-    <Link to={`/vendors/${vendor.slug}`} className="vendor-link">
-      <div className="vendor-card">
+    <div className="card p-3 mb-3">
 
-        {/* IMAGE */}
-        <div className="vendor-image">
-          <img
-            src={vendor.thumbnail}
-            alt={vendor.brand_name}
-          />
-        </div>
+      <h5>{vendor.brand_name}</h5>
+      <p>₹ {vendor.per_day_price}</p>
 
-        {/* CONTENT */}
-        <div className="vendor-body">
+      {/* DATE */}
+      <input
+        type="date"
+        className="form-control mb-2"
+        onChange={(e) => setSelectedDate(e.target.value)}
+      />
 
-          {/* TITLE */}
-          <h3 className="vendor-name">
-            {vendor.brand_name}
-          </h3>
+      {/* ADD TO CART */}
+      <button
+        className="btn btn-primary"
+        onClick={() => {
+          if (!selectedDate) {
+            alert("Select date first");
+            return;
+          }
 
-          {/* LOCATION */}
-          <p className="vendor-location">
-            {vendor.address?.city_id}, {vendor.address?.state_id}
-          </p>
+          addToCart({
+            id: vendor.id,
+            name: vendor.brand_name,
+            price: vendor.per_day_price,
+            date: selectedDate,
+            image: vendor.thumbnail,
+          });
+        }}
+      >
+        Add to Cart
+      </button>
 
-          {/* FOOTER */}
-          <div className="vendor-footer">
-
-            {/* PRICE */}
-            <span className="vendor-price">
-              ₹{Number(vendor.per_day_price).toLocaleString()}
-            </span>
-
-            {/* RATING */}
-            <span className="vendor-rating">
-              ★ {vendor.rating} ({vendor.total_reviews})
-            </span>
-
-          </div>
-
-        </div>
-      </div>
-    </Link>
+    </div>
   );
 };
 

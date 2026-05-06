@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useCartStore } from "../store/cart-store";
+import DatePicker from "react-datepicker";
+
+import Calendar from "react-calendar";
 
 const VendorDetailsPage = () => {
   const { slug } = useParams();
   const [vendor, setVendor] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
+  const addToCart = useCartStore((state) => state.addToCart);
+
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   useEffect(() => {
     const fetchVendor = async () => {
@@ -34,28 +42,37 @@ const VendorDetailsPage = () => {
   const bookedDates = vendor.events?.booked || [];
   const blockedDates = vendor.events?.blocked || [];
 
-  // ================= CALENDAR =================
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
+  // ================= ADD TO CART =================
+  const handleAddToCart = () => {
+    if (!selectedDate) {
+      alert("Please select a date");
+      return;
+    }
 
-  const days = Array.from(
-    { length: new Date(year, month + 1, 0).getDate() },
-    (_, i) => i + 1
-  );
+    const formattedDate = selectedDate.toISOString().split("T")[0];
 
-  const formatDate = (day: number) => {
-    const d = new Date(year, month, day);
-    return d.toISOString().split("T")[0];
-  };
+    // ❌ prevent booked dates
+    const isBooked = bookedDates?.some(
+      (b: any) => b.date === formattedDate
+    );
 
-  const getClass = (day: number) => {
-    const d = formatDate(day);
+    if (isBooked) {
+      alert("This date is already booked");
+      return;
+    }
 
-    if (bookedDates.some((b: any) => b.date === d)) return "booked";
-    if (blockedDates.some((b: any) => b.date === d)) return "blocked";
+    const cartItem = {
+      id: vendor.id,
+      name: vendor.brand_name,
+      city: vendor.address?.city,
+      price: vendor.menus?.[0]?.price_per_plate || 0,
+      date: formattedDate,
+      image: vendor.thumbnail,
+    };
 
-    return "";
+    addToCart(cartItem);
+
+    alert("Added to cart!");
   };
 
   return (
@@ -198,7 +215,6 @@ const VendorDetailsPage = () => {
                 </div>
 
                 <div className="card-shadow-body">
-
                   <p>
                     {vendor.address?.address},{" "}
                     {vendor.address?.city},{" "}
@@ -207,21 +223,14 @@ const VendorDetailsPage = () => {
                   </p>
 
                   <div id="map-holder">
-                    <div
-                      id="map_extended"
-                      className="vendor-single-popup-wrap"
-                    >
-                      <iframe
-                        src={`https://www.google.com/maps?q=${vendor.address?.address},${vendor.address?.city}&output=embed`}
-                        width="100%"
-                        height="450"
-                        style={{ border: 0 }}
-                        loading="lazy"
-                        allowFullScreen
-                      ></iframe>
-                    </div>
+                    <iframe
+                      src={`https://www.google.com/maps?q=${vendor.address?.address},${vendor.address?.city}&output=embed`}
+                      width="100%"
+                      height="450"
+                      style={{ border: 0 }}
+                      loading="lazy"
+                    ></iframe>
                   </div>
-
                 </div>
               </div>
 
@@ -231,25 +240,196 @@ const VendorDetailsPage = () => {
             <div className="col-lg-4 col-md-12">
               <aside className="row sidebar-widgets">
                 <div className="sidebar-primary col-lg-12 col-md-6">
-
-                  {/* ================= CALENDAR ================= */}
                   <div className="widget mb-5">
-                    <h3 className="widget-title">Availability</h3>
 
-                    <div className="datepicker-inline">
-                      <div className="calendar-grid">
-                        {days.map((day) => (
-                          <div
-                            key={day}
-                            className={`calendar-day ${getClass(day)}`}
-                          >
-                            {day}
-                          </div>
-                        ))}
+                    <div
+                      className="availability-card"
+                      style={{
+                        background: "#fff",
+                        borderRadius: "16px",
+                        border: "1px solid #e5e7eb",
+                        padding: "20px",
+                        boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+                      }}
+                    >
+                      <h3
+                        className="title"
+                        style={{
+                          fontSize: "11px",
+                          fontWeight: 700,
+                          letterSpacing: "0.1em",
+                          color: "#374151",
+                          textTransform: "uppercase",
+                          marginBottom: "16px",
+                          margin: "0 0 16px 0",
+                        }}
+                      >
+                        AVAILABILITY CHECK:
+                      </h3>
+
+                      <div className="calendar-wrapper">
+                        <Calendar
+                          value={selectedDate}
+                          onChange={(value) => setSelectedDate(value as Date)}
+                          minDate={new Date()}
+                          formatDay={() => ""}
+                          tileContent={({ date, view }) => {
+                            if (view !== "month") return null;
+
+                            const formattedDate = date.toISOString().split("T")[0];
+                            const todayDate = new Date().toISOString().split("T")[0];
+
+                            const isBooked = bookedDates?.some(
+                              (b: any) => b.date === formattedDate
+                            );
+                            const isBlocked = blockedDates?.some(
+                              (b: any) => b.date === formattedDate
+                            );
+                            const isSelected =
+                              selectedDate?.toISOString().split("T")[0] === formattedDate;
+                            const isToday = todayDate === formattedDate;
+
+                            let background = "transparent";
+                            let color = "#111827";
+                            let border = "none";
+
+                            if (isBooked) background = "#f9a8d4";
+                            if (isBlocked) background = "#fef08a";
+                            if (isSelected) {
+                              background = "#ec4899";
+                              color = "#ffffff";
+                            }
+                            if (isToday && !isSelected) {
+                              border = "2px solid #ec4899";
+                            }
+
+                            return (
+                              <span
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  width: "32px",
+                                  height: "32px",
+                                  borderRadius: "50%",
+                                  background,
+                                  color,
+                                  border,
+                                  margin: "0 auto",
+                                  fontSize: "13px",
+                                  fontWeight: isSelected ? 700 : 400,
+                                }}
+                              >
+                                {date.getDate()}
+                              </span>
+                            );
+                          }}
+                        />
                       </div>
-                    </div>
-                  </div>
 
+                      <div
+                        className="calendar-legend"
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "16px",
+                          marginTop: "16px",
+                          fontSize: "11px",
+                          fontWeight: 600,
+                          letterSpacing: "0.08em",
+                          color: "#4b5563",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                          <span
+                            className="dot booked-dot"
+                            style={{
+                              width: "12px",
+                              height: "12px",
+                              borderRadius: "50%",
+                              background: "#f9a8d4",
+                              display: "inline-block",
+                              flexShrink: 0,
+                            }}
+                          />
+                          BOOKED
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                          <span
+                            className="dot tentative-dot"
+                            style={{
+                              width: "12px",
+                              height: "12px",
+                              borderRadius: "50%",
+                              background: "#fef08a",
+                              display: "inline-block",
+                              flexShrink: 0,
+                            }}
+                          />
+                          TENTATIVE
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                          <span
+                            className="dot selected-dot"
+                            style={{
+                              width: "12px",
+                              height: "12px",
+                              borderRadius: "50%",
+                              background: "#ec4899",
+                              display: "inline-block",
+                              flexShrink: 0,
+                            }}
+                          />
+                          SELECTED
+                        </div>
+                      </div>
+
+                      <button
+                        className="add-to-cart-btn"
+                        onClick={handleAddToCart}
+                        style={{
+                          width: "100%",
+                          marginTop: "20px",
+                          padding: "14px",
+                          background: "#ec4899",
+                          color: "#fff",
+                          fontWeight: 700,
+                          fontSize: "13px",
+                          letterSpacing: "0.1em",
+                          textTransform: "uppercase",
+                          border: "none",
+                          borderRadius: "999px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "8px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="18"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.4 7h12.8M10 21a1 1 0 100-2 1 1 0 000 2zm7 0a1 1 0 100-2 1 1 0 000 2z"
+                          />
+                        </svg>
+                        ADD TO CART
+                      </button>
+                    </div>
+
+                  </div>
                 </div>
               </aside>
             </div>

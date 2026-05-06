@@ -1,19 +1,22 @@
-<<<<<<< HEAD
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { sendOtp } from "../services/auth-service";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import type { SendOtpRequest } from "../types/user.type";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { sendOtp, verifyOtp, resendOtp } from "../api/auth-api";
-import OtpInput from "../components/otp-input";
-import { useLoginStore } from "../store/login-store";
-import "../assets/css/login.css";
+import logo from "../assets/images/logo_all_happy_events.png";
+import banner from "../assets/images/weddings/bridal_fashion.png";
+
+import "../assets/css/style.css";
 
 const loginSchema = z.object({
   phone_number: z
     .string()
-    .length(10, "Phone number must be 10 digits"),
+    .min(10, "Enter valid phone number")
+    .max(10, "Only 10 digits allowed"),
 });
 
 type LoginFormInputs = z.infer<typeof loginSchema>;
@@ -22,204 +25,144 @@ const Login = () => {
   const navigate = useNavigate();
 
   const {
-    step,
-    otp,
-    timer,
-    error,
-    setStep,
-    setOtp,
-    setError,
-    startTimer,
-  } = useLoginStore();
-
-  const {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm<LoginFormInputs>({
     resolver: zodResolver(loginSchema),
   });
 
-  const sendOtpMutation = useMutation({
-    mutationFn: (data: LoginFormInputs) =>
-      sendOtp("+91" + data.phone_number),
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: SendOtpRequest) => sendOtp(data),
 
-    onSuccess: () => {
-      setStep("OTP");
-      setError("");
-      startTimer();
+    onSuccess: (_data, variables) => {
+      navigate("/verify-otp", {
+        state: { phone: variables.phone_number },
+      });
     },
 
-    onError: (err: any) => {
-      setError(err.response?.data?.message || "User not found");
-    },
-  });
-
-  // 🔹 VERIFY OTP
-  const verifyMutation = useMutation({
-    mutationFn: (data: { phone_number: string; otp: string }) =>
-      verifyOtp(data),
-
-    onSuccess: (res: any) => {
-      const token =
-        // res?.data?.token ||
-        // res?.data?.access_token ;
-        res?.data?.data?.token;
-
-      if (!token) {
-        setError("Login failed");
-        return;
-      }
-
-      localStorage.setItem("token", token);
-      navigate("/", { replace: true });
-    },
-
-    onError: (err: any) => {
-      setError(err.response?.data?.message || "Invalid OTP");
+    onError: (error: any) => {
+      console.log(error.response?.data || error.message);
     },
   });
-  const onSubmit = (data: LoginFormInputs) => {
-    sendOtpMutation.mutate(data);
-  };
 
-  const handleVerify = () => {
-    if (otp.join("").length !== 6) {
-      setError("Enter valid 6-digit OTP");
-      return;
-    }
-
-    verifyMutation.mutate({
-      phone_number: "+91" + getValues("phone_number"),
-      otp: otp.join(""),
-    });
-  };
-
-  const handleResend = async () => {
-    await resendOtp("+91" + getValues("phone_number"));
-    startTimer();
+  const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
+    mutate(data);
   };
 
   return (
-    <div className="login-page d-flex justify-content-center align-items-center vh-100">
-      <div className="login-card p-4">
+    <div className="login-page my-5 py-5">
 
-        <h3 className="text-center mb-2">Login</h3>
-        <p className="text-center subtitle">Login with OTP</p>
+      <div className="login-wrapper my-5 ">
 
-        {error && <p className="error">{error}</p>}
+        {/* LEFT SIDE */}
+        <div className="login-left">
 
-        {/* STEP 1 */}
-        {step === "PHONE" && (
+          <img
+            src={logo}
+            alt="logo"
+            className="brand-logo"
+          />
+
+          <h1 className="welcome-title">
+            Welcome Back
+          </h1>
+
+          <p className="welcome-subtitle">
+            Enter your mobile number to sign in
+          </p>
+
           <form onSubmit={handleSubmit(onSubmit)}>
 
-            <div className="input-group-custom">
-              <span className="country-code">+91</span>
+            <label className="phone-label">
+              Mobile Number
+            </label>
+
+            <div className="phone-box">
+
+              <span className="country-code">
+                +91
+              </span>
+
               <input
-                type="text"
-                placeholder="Enter phone number"
+                type="tel"
+                placeholder="9876543210"
                 {...register("phone_number")}
               />
+
             </div>
 
             {errors.phone_number && (
-              <p className="invalid-feedback">
+              <p className="error-text">
                 {errors.phone_number.message}
               </p>
             )}
 
-            <button className="btn btn-primary"  type="submit"> 
-              {sendOtpMutation.isPending ? "Sending OTP..." : "Send OTP"}
+            <button
+              type="submit"
+              className="otp-btn"
+              disabled={isPending}
+            >
+              {isPending ? "Sending OTP..." : "Send OTP"}
             </button>
-          </form>
-        )}
 
-        {/* STEP 2 */}
-        {step === "OTP" && (
-          <>
-            <p className="otp-text">
-              OTP sent to <b>+91{getValues("phone_number")}</b>
+          </form>
+
+          <p className="bottom-link">
+            Don't have an account?{" "}
+
+            <Link
+              to="/register"
+              className="text-decoration-none"
+            >
+              <span>Create Account</span>
+            </Link>
+          </p>
+
+          <p className="bottom-link">
+            Are you a Vendor?{" "}
+
+            <Link
+              to="/login"
+              className="text-decoration-none"
+            >
+              <span>Vendor Login</span>
+            </Link>
+          </p>
+          <p className="terms-text">
+            By continuing, you agree to our
+            <span> Terms & Privacy Policy</span>
+          </p>
+
+        </div>
+
+
+        {/* RIGHT SIDE */}
+        <div className="login-right">
+
+          <img
+            src={banner}
+            alt="banner"
+          />
+
+          <div className="overlay-content">
+
+            <h2>
+              Plan your dream wedding with ease and elegance.
+            </h2>
+
+            <p>
+              Find the best vendors for your special day.
             </p>
 
-            <OtpInput otp={otp} setOtp={setOtp} />
-
-            <button className="mt-5" onClick={handleVerify}> 
-              {verifyMutation.isPending ? "Verifying..." : "Verify OTP"}
-            </button>
-
-            {timer > 0 ? (
-              <p className="timer">Resend in {timer}s</p>
-            ) : (
-              <button className="resend" onClick={handleResend}>
-                Resend OTP
-              </button>
-            )}
-          </>
-        )}
-
-=======
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useSendOtp } from "../hooks/use-auth";
-import { useNavigate } from "react-router-dom";
-
-const schema = z.object({
-  phone: z.string().min(10),
-});
-
-type FormData = z.infer<typeof schema>;
-
-const LoginPage = () => {
-  const navigate = useNavigate();
-  const { mutate, isPending } = useSendOtp();
-
-  const { register, handleSubmit } = useForm<FormData>({
-    resolver: zodResolver(schema),
-  });
-
-  const onSubmit = (data: FormData) => {
-    mutate(data, {
-      onSuccess: () => {
-        navigate("/verify-otp", { state: { phone: data.phone } });
-      },
-    });
-  };
-
-  return (
-<<<<<<< HEAD
-    <div className="container d-flex align-items-center justify-content-center vh-100 bg-light">
-      <div className="card shadow-lg p-4" style={{ width: "400px" }}>
-        <h3 className="text-center mb-3">Login</h3>
-        {error && (
-          <div className="alert alert-danger text-center py-2">
-            {(error as any).message}
           </div>
-        )}
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <PhoneInput register={register} error={errors.phone?.message}/>
-          <button className="btn btn-primary w-100" disabled={isPending}>
-            {isPending ? "Sending OTP..." : "Send OTP"}
-          </button>
-        </form>
->>>>>>> cb3e55f (final commit)
+
+        </div>
+
       </div>
+
     </div>
   );
 };
-<<<<<<< HEAD
 
-=======
->>>>>>> cb3e55f (final commit)
 export default Login;
-=======
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("phone")} placeholder="Enter phone" />
-      <button disabled={isPending}>Send OTP</button>
-    </form>
-  );
-};
-
-export default LoginPage;
->>>>>>> c878c0b (added vendor services, auth store, updated types, removed unused stores)

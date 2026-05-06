@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCategories } from "../../services/vendor-category-service";
+import { getCategories } from "../../services/hero-servie";
 
 const VendorCategories = () => {
   const { data = [], isLoading } = useQuery({

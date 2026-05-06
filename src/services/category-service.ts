@@ -1,15 +1,16 @@
-import Api from "../api/axios"; 
+// category-service.ts
+
+import Api from "../api/axios";
 
 export interface PopularCategory {
   id: number;
-  title: string;
+  name: string;
   image: string;
-  count: number;
-  icon: string;
+  slug: string;
 }
 
 export const getPopularCategories = async (): Promise<PopularCategory[]> => {
-  const { data } = await Api.get("/popular-categories");
-  // if response is { data: [...] } then: return data.data;
-  return data;
+  const res = await Api.get("/categories"); 
+
+  return res.data.data;
 };

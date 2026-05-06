@@ -10,8 +10,8 @@ const RealWeddings = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <section className="wide-tb-120">
-      <div className="container">
+    <section className="wide">
+      <div className="container py-5">
         <div className="section-title text-center">
           <h1>Real Weddings</h1>
           <p>Beautiful love stories from couples across India</p>

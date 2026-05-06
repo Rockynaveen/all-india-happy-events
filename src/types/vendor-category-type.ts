@@ -1,16 +1,11 @@
-export interface Category {
+export type Category = {
   id: number;
   name: string;
   slug: string;
-  image: string;
-  vendor_count: number;
-  sub_categories: SubCategory[];
-}
+};
 
-export interface SubCategory {
-  id: number;
-  name: string;
-  slug: string;
-  image: string;
-  vendor_count: number;
+export type CategoriesResponse = {
+  success: boolean;
+  message: string;
+  data: Category[];
 }

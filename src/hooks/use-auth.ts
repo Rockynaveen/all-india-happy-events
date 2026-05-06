@@ -1,31 +1,26 @@
 import { useMutation } from "@tanstack/react-query";
-import { sendOtp, verifyOtp, registerUser } from "../services/auth-service";
+import { authService } from "../services/auth-service";
 import { useAuthStore } from "../store/auth-store";
 
-export const useSendOtp = () => {
-  return useMutation({
-    mutationFn: sendOtp,
+export const useSendOtp = () =>
+  useMutation({
+    mutationFn: authService.sendOtp,
   });
-};
 
 export const useVerifyOtp = () => {
   const setAuth = useAuthStore((s) => s.setAuth);
 
   return useMutation({
-    mutationFn: verifyOtp,
+    mutationFn: ({ phone, otp }: { phone: string; otp: string }) =>
+      authService.verifyOtp(phone, otp),
+
     onSuccess: (data) => {
-      setAuth(data);
+      setAuth(data.user, data.token);
     },
   });
 };
 
-export const useRegister = () => {
-  const setAuth = useAuthStore((s) => s.setAuth);
-
-  return useMutation({
-    mutationFn: registerUser,
-    onSuccess: (data) => {
-      setAuth(data);
-    },
+export const useRegister = () =>
+  useMutation({
+    mutationFn: authService.register,
   });
-};
